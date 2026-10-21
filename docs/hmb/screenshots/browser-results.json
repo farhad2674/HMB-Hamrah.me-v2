@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-21T13:08:12.192Z",
+  "environment": "Chromium / local Next server / synthetic local records",
+  "results": [
+    {
+      "name": "Public routes resolve and RTL language is declared",
+      "status": "passed"
+    },
+    {
+      "name": "Homepage internal links resolve",
+      "status": "passed"
+    },
+    {
+      "name": "Responsive overflow at 360, 390, 768, 1024 and 1440 px",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop and mobile screenshots",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile menu, keyboard skip link, motion and demo controls",
+      "status": "passed"
+    },
+    {
+      "name": "Application UI completes and durable retry is idempotent",
+      "status": "passed"
+    },
+    {
+      "name": "Member creates and submits journal through UI",
+      "status": "passed"
+    },
+    {
+      "name": "Assigned coach reviews through UI; member acknowledges and follows up",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-user object access and private API denied to visitor",
+      "status": "passed"
+    },
+    {
+      "name": "Admin reviews application and persists private notes through UI",
+      "status": "passed"
+    },
+    {
+      "name": "CMS draft hidden and published content available",
+      "status": "passed"
+    },
+    {
+      "name": "No browser JavaScript exceptions on public journey",
+      "status": "passed"
+    },
+    {
+      "name": "Process tabs move keyboard focus with selected state",
+      "status": "passed"
+    },
+    {
+      "name": "720 CSS px reflow equivalent to 1440 desktop at 200% zoom",
+      "status": "passed",
+      "note": "Viewport reflow simulation, not a native browser zoom command."
+    }
+  ],
+  "reverification": "Focused responsive/keyboard/screenshot rerun after CSS-only repair; prior full journey results retained."
+}

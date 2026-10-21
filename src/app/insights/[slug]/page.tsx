@@ -1,0 +1,8 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { articles,published } from '@/lib/content';
+import { PageIntro,TextBody } from '../../approach/PublicShell';
+export const dynamic='force-dynamic';
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const a=published('article').find(x=>x.slug===slug)||articles.find(x=>x.slug===slug);return {title:a?.title||'یادداشت پیدا نشد',description:a?.summary};}
+export default async function Article({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const custom=published('article').find(x=>x.slug===slug);const a=custom||articles.find(x=>x.slug===slug);if(!a)notFound();return <><PageIntro eyebrow="مجلهٔ همراه / تمرین آموزشی" title={a.title} description={a.summary}/><section className="section"><article className="container narrow"><div className="article-meta muted"><span>یادداشت آموزشی HMB</span><span> · </span><time dateTime={custom?.updatedAt||'2026-10-21'}>{new Intl.DateTimeFormat('fa-IR',{dateStyle:'long',timeZone:'Asia/Tehran'}).format(new Date(custom?.updatedAt||'2026-10-21T12:00:00Z'))}</time></div><TextBody body={a.body}/><aside className="notice"><strong>دربارهٔ این متن</strong><p>این متن یک پیشنهاد تمرینی برای آموزش است و ادعای پژوهشی یا توصیهٔ شخصی ندارد. دربارهٔ تصمیم مالی خود مستقل و با توجه به ریسک عمل کنید.</p></aside><div className="stack"><Link className="btn btn-primary" href="/journal">تمرین را در نمونهٔ ژورنال ببینید</Link><Link className="btn btn-secondary" href="/insights">بازگشت به مجله</Link></div></article></section></>}

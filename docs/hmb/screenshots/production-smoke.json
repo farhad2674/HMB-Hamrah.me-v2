@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-21T13:10:42.163Z",
+  "runtime": "Next.js production next start; Node24; local Chromium; no network/CPU throttling",
+  "checks": {
+    "health": "passed",
+    "homepageSSR": "passed",
+    "mobile390NoOverflow": "passed",
+    "durableApplicationAPI": "passed",
+    "privateQueueVisitorDenied": "passed"
+  },
+  "navigationTiming": {
+    "domContentLoadedMs": 58,
+    "loadMs": 281,
+    "resources": 36
+  },
+  "limits": "Single local lab navigation, not field Web Vitals, mobile hardware test or load test"
+}
