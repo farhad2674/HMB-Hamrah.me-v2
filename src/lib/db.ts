@@ -5,7 +5,7 @@ import { randomUUID, createHash } from 'node:crypto';
 
 export type Role = 'member'|'coach'|'editor'|'reviewer'|'admin';
 export type User = {id:string;name:string;email:string;role:Role;active:boolean;coachId:string|null};
-export type Content = {id:string;type:'article'|'program'|'event';slug:string;title:string;summary:string;body:string;status:string;createdAt:string;updatedAt:string};
+export type Content = {id:string;type:'article'|'program'|'event';slug:string;title:string;summary:string;body:string;status:string;seoTitle?:string;metaDescription?:string;socialImage?:string;imageAlt?:string;category?:string;tags?:string[];sourceUrls?:string[];readingMinutes?:string;courseLevel?:string;instructorName?:string;duration?:string;deliveryFormat?:string;support?:string;saleStatus?:'ready'|'request_only'|'closed';createdAt:string;updatedAt:string};
 export type Entry = {id:string;ownerId:string;ownerName?:string;instrument:string;context:'practice'|'live';plan:string;reasoning:string;risk:string;execution:string;reflection:string;nextAction:string;status:string;version:number;createdAt:string;updatedAt:string;feedback?:{observation:string;exercise:string;createdAt:string};history:unknown[]};
 export class DomainError extends Error { status:number; constructor(message:string,status=400){super(message);this.status=status;} }
 let singleton:DatabaseSync|undefined;

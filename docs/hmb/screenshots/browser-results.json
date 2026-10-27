@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-21T13:08:12.192Z",
+  "date": "2026-10-27T10:04:46.015Z",
   "environment": "Chromium / local Next server / synthetic local records",
   "results": [
     {
@@ -49,16 +49,6 @@
     {
       "name": "No browser JavaScript exceptions on public journey",
       "status": "passed"
-    },
-    {
-      "name": "Process tabs move keyboard focus with selected state",
-      "status": "passed"
-    },
-    {
-      "name": "720 CSS px reflow equivalent to 1440 desktop at 200% zoom",
-      "status": "passed",
-      "note": "Viewport reflow simulation, not a native browser zoom command."
     }
-  ],
-  "reverification": "Focused responsive/keyboard/screenshot rerun after CSS-only repair; prior full journey results retained."
+  ]
 }

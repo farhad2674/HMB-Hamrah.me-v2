@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BookOpen,MessagesSquare,NotebookPen,ArrowUpLeft } from 'lucide-react';
 import { PageIntro } from '../approach/PublicShell';
-export const metadata:Metadata={title:'خدمات و مسیرها',description:'آموزش، کوچینگ و مشاورهٔ مسیر؛ پیدا کردن یک قدم متناسب با نیاز شما.'};
+import { pageMetadata } from '@/lib/site';
+export const metadata=pageMetadata({title:'خدمات آموزش فارکس، تمرین و کوچینگ | همراه',description:'راهنمای انتخاب دوره جامع فارکس، تمرین و مدیریت ریسک، کوچینگ و مشاوره مسیر همراه.',path:'/services'});
 export default function Services(){return <><PageIntro eyebrow="خدمات / از نیاز شما شروع می‌کنیم" title="برای هر مرحله، یک قدم روشن." description="ممکن است به یک مسیر آموزشی نیاز داشته باشید، بخواهید اجرای خود را مرور کنید یا هنوز دربارهٔ نقطهٔ شروع مطمئن نباشید."/><section className="section"><div className="container grid-3">{[{Icon:BookOpen,title:'یادگیری ساختارمند',text:'مفاهیم پایه و تمرین کاربرد آن‌ها را در یک مسیر متناسب با تجربهٔ خود دنبال کنید.',href:'/programs',label:'دیدن مسیرهای یادگیری'},{Icon:NotebookPen,title:'کوچینگ و مرور ژورنال',text:'زمینهٔ یک تصمیم را ثبت کنید و دربارهٔ اجرای برنامه و تمرین بعدی بازخورد بگیرید.',href:'/coaching',label:'شناخت مسیر کوچینگ'},{Icon:MessagesSquare,title:'مشاورهٔ انتخاب مسیر',text:'نیاز فعلی و پرسش خود را مطرح کنید تا موضوع و حدود یک گفت‌وگوی مناسب بررسی شود.',href:'/services/consultation',label:'جزئیات مشاوره'}].map(({Icon,title,text,href,label})=><article className="card" key={href}><Icon size={30}/><h2>{title}</h2><p className="muted">{text}</p><Link className="btn btn-secondary" href={href}>{label}<ArrowUpLeft size={18}/></Link></article>)}</div></section></>}

@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
 import ApplyForm from './ApplyForm';
-export const metadata={title:'درخواست بررسی مسیر | HMB',description:'برای شناخت مسیر آموزش، تمرین یا کوچینگ، نیاز خود را با HMB در میان بگذارید.'};
-export default function Page(){return <Suspense fallback={<div className="container section">در حال آماده‌سازی فرم…</div>}><ApplyForm/></Suspense>}
+import { pageMetadata } from '@/lib/site';
+export const metadata=pageMetadata({title:'درخواست مشاوره دوره فارکس و کوچینگ | همراه',description:'برای انتخاب دوره فارکس، مسیر تمرین یا کوچینگ، تجربه و نیاز خود را با همراه در میان بگذارید.',path:'/apply'});
+export default async function Page({searchParams}:{searchParams:Promise<{offer?:string}>}){const {offer}=await searchParams;return <ApplyForm initialOffer={offer}/>}

@@ -1,19 +1,19 @@
 'use client';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { ApiError, request, offers, Feedback } from '@/components/WorkflowUI';
+import Companion from '@/components/Companion';
 
 const empty = { name: '', contactMethod: 'email', contact: '', offer: 'consultation', experience: 'beginner', difficulty: '', outcome: '', format: 'either', consent: false, marketing: false, website: '' };
 type Field = keyof typeof empty;
 const fieldSteps: Partial<Record<Field, number>> = { offer: 0, experience: 0, format: 0, difficulty: 1, outcome: 1, name: 2, contactMethod: 2, contact: 2, consent: 2, marketing: 2 };
 const normalizeDigits = (value: string) => value.replace(/[۰-۹٠-٩]/g, char => String(char.charCodeAt(0) - (char >= '۰' ? 1776 : 1632)));
 
-export default function ApplyForm() {
- const params = useSearchParams();
+export default function ApplyForm({ initialOffer = 'consultation' }: { initialOffer?: string }) {
  const router = useRouter();
- const [data, setData] = useState({ ...empty, offer: offers[params.get('offer') || ''] ? params.get('offer')! : 'consultation' });
+ const [data, setData] = useState({ ...empty, offer: offers[initialOffer] ? initialOffer : 'consultation' });
  const [step, setStep] = useState(0);
  const [error, setError] = useState('');
  const [fields, setFields] = useState<Record<string, string>>({});
@@ -32,7 +32,7 @@ export default function ApplyForm() {
   setError('');
  }
  function inputProps(name: Field) {
-  return { id: `application-${name}`, 'aria-invalid': Boolean(fields[name]), 'aria-describedby': fields[name] ? `application-${name}-error` : undefined };
+  return { id: `application-${name}`, name, 'aria-invalid': Boolean(fields[name]), 'aria-describedby': fields[name] ? `application-${name}-error` : undefined };
  }
  function fieldError(name: Field) {
   return fields[name] ? <span id={`application-${name}-error`} className="error" role="alert">{fields[name]}</span> : null;
@@ -88,6 +88,7 @@ export default function ApplyForm() {
 
  return <div className="container section application-layout">
   <aside className="application-aside">
+   <Companion mood={step === 2 ? 'complete' : step === 1 ? 'think' : 'welcome'} size="sm" />
    <p className="eyebrow">قدم اول، شناختن مسیر شماست</p>
    <h1>از همین‌جا،<br />با هم شروع کنیم.</h1>
    <p className="muted">کمی از تجربه و نیازتان بگویید تا درخواست شما برای مسیر مناسب بررسی شود.</p>
@@ -99,6 +100,7 @@ export default function ApplyForm() {
    <h2 ref={heading} tabIndex={-1}>{['کدام مسیر به شما نزدیک‌تر است؟', 'دوست دارید روی چه چیزی کار کنید؟', 'چطور با شما در ارتباط باشیم؟'][step]}</h2>
    <form onSubmit={submit} className="stack" noValidate aria-busy={pending}>
     <Feedback error={error} />
+    <div className="application-step-panel" key={step}>
     {step === 0 && <>
      <label className="field">مسیر موردنظر<select {...inputProps('offer')} value={data.offer} onChange={e => set('offer', e.target.value)}>{Object.entries(offers).map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>{fieldError('offer')}</label>
      <label className="field">تجربه شما<select {...inputProps('experience')} value={data.experience} onChange={e => set('experience', e.target.value)}><option value="beginner">در شروع یادگیری هستم</option><option value="active">با مفاهیم آشنا هستم و تمرین می‌کنم</option><option value="experienced">تجربه معامله دارم و بازخورد می‌خواهم</option></select>{fieldError('experience')}</label>
@@ -114,11 +116,13 @@ export default function ApplyForm() {
      <label className="field">نام و نام خانوادگی<input {...inputProps('name')} autoComplete="name" required minLength={2} maxLength={100} value={data.name} onChange={e => set('name', e.target.value)} />{fieldError('name')}</label>
      <label className="field">روش ارتباطی<select {...inputProps('contactMethod')} value={data.contactMethod} onChange={e => { set('contactMethod', e.target.value); set('contact', ''); }}><option value="email">ایمیل</option><option value="phone">تلفن</option></select>{fieldError('contactMethod')}</label>
      <label className="field">{data.contactMethod === 'email' ? 'نشانی ایمیل' : 'شماره تماس'}<input {...inputProps('contact')} dir="ltr" type={data.contactMethod === 'email' ? 'email' : 'tel'} autoComplete={data.contactMethod === 'email' ? 'email' : 'tel'} required minLength={5} maxLength={150} value={data.contact} onChange={e => set('contact', e.target.value)} />{fieldError('contact')}</label>
+     <section className="application-review" aria-labelledby="application-review-title"><h3 id="application-review-title">مرور پیش از ارسال</h3><dl><div><dt>مسیر</dt><dd>{offers[data.offer]}</dd></div><div><dt>تجربه</dt><dd>{data.experience === 'beginner' ? 'در شروع یادگیری' : data.experience === 'active' ? 'آشنا با مفاهیم و در حال تمرین' : 'دارای تجربه و نیازمند بازخورد'}</dd></div><div><dt>چالش اصلی</dt><dd>{data.difficulty}</dd></div><div><dt>هدف</dt><dd>{data.outcome}</dd></div><div><dt>راه پاسخ‌گویی</dt><dd>{data.contactMethod === 'email' ? 'ایمیل' : 'تلفن'}: <bdi>{data.contact || 'پس از تکمیل این مرحله'}</bdi></dd></div></dl><button type="button" className="text-link" onClick={() => { setStep(0); setError(''); }}>ویرایش مسیر و پاسخ‌ها</button></section>
      <label className="check-field"><input {...inputProps('consent')} type="checkbox" required checked={data.consent} onChange={e => set('consent', e.target.checked)} /><span><Link href="/privacy" target="_blank">اطلاعیه حریم خصوصی</Link> را خوانده‌ام و برای پاسخ به این درخواست اجازه تماس می‌دهم.</span></label>{fieldError('consent')}
      <label className="check-field"><input {...inputProps('marketing')} type="checkbox" checked={data.marketing} onChange={e => set('marketing', e.target.checked)} /><span>مایلم اطلاع‌رسانی آموزشی دریافت کنم. (اختیاری)</span></label>{fieldError('marketing')}
-     <div aria-hidden="true" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', clipPath: 'inset(50%)', whiteSpace: 'nowrap', border: 0 }}><label>وب‌سایت<input tabIndex={-1} autoComplete="off" value={data.website} onChange={e => set('website', e.target.value)} /></label></div>
+     <div aria-hidden="true" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', clipPath: 'inset(50%)', whiteSpace: 'nowrap', border: 0 }}><label>وب‌سایت<input {...inputProps('website')} tabIndex={-1} autoComplete="off" value={data.website} onChange={e => set('website', e.target.value)} /></label></div>
      <p className="notice">پس از ذخیره درخواست، کد پیگیری نمایش داده می‌شود. بررسی درخواست به معنی تضمین پذیرش یا نتیجه معاملاتی نیست.</p>
     </>}
+    </div>
     <div className="button-row">
      {step > 0 && <button type="button" disabled={pending} className="btn btn-secondary" onClick={() => { setStep(s => s - 1); setError(''); }}><ArrowRight size={18} />مرحله قبل</button>}
      <button className="btn btn-primary" disabled={pending}>{pending ? 'در حال ثبت…' : step === 2 ? 'ثبت درخواست' : 'ادامه'}<ArrowLeft size={18} /></button>

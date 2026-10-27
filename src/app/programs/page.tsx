@@ -1,8 +1,40 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowUpLeft, BookOpen, ListChecks } from 'lucide-react';
+import { ArrowUpLeft, BookOpen, Check, ListChecks } from 'lucide-react';
 import { programs, published } from '@/lib/content';
+import { pageMetadata } from '@/lib/site';
 import { PageIntro, NextStep } from '../approach/PublicShell';
-export const dynamic='force-dynamic';
-export const metadata:Metadata={title:'مسیرهای یادگیری',description:'مسیر پایه و تمرین HMB؛ انتخاب آموزش متناسب با تجربه و هدف شما.'};
-export default function Programs(){const records=published('program');const listed=programs.map(p=>{const edited=records.find(x=>x.slug===p.slug);return edited?{...p,title:edited.title,description:edited.summary}:p;});const additional=records.filter(p=>!programs.some(x=>x.slug===p.slug));return <><PageIntro eyebrow="آموزش‌ها / یک مسیر متناسب با شما" title="یاد بگیرید. تمرین کنید. مرور کنید." description="از مفاهیم پایه تا بازبینی اجرای برنامه؛ نقطهٔ شروع مسیر، تجربه و نیاز فعلی شماست. سرفصل‌های زیر چارچوب پیشنهادی برای بررسی تناسب‌اند."/><section className="section"><div className="container grid-2">{listed.map((p,i)=><article className="card program-card" key={p.slug}>{i?<ListChecks size={32}/>:<BookOpen size={32}/>}<p className="eyebrow">{p.label} · {p.audience}</p><h2>{p.title}</h2><p className="muted">{p.description}</p><p className="badge">پذیرش پس از بررسی درخواست</p><Link className="btn btn-secondary" href={`/programs/${p.slug}`}>شناخت این مسیر <ArrowUpLeft size={18}/></Link></article>)}{additional.map(p=><article className="card" key={p.id}><p className="eyebrow">مسیر یادگیری</p><h2>{p.title}</h2><p>{p.summary}</p><Link className="btn btn-secondary" href={`/programs/${p.slug}`}>جزئیات مسیر</Link></article>)}</div></section><section className="section"><div className="container notice"><h2>پیش از تصمیم، جزئیات را بدانید.</h2><p>مدرس، تعداد جلسات، زمان‌بندی، شیوهٔ برگزاری، هزینه و حدود پشتیبانی پس از بررسی درخواست و پیش از هر تعهدی اعلام می‌شود. این صفحه ثبت‌نام قطعی یا رزرو ظرفیت نیست.</p></div></section><NextStep title="هنوز نمی‌دانید کدام مسیر مناسب‌تر است؟"/></>}
+
+export const dynamic = 'force-dynamic';
+export const metadata = pageMetadata({
+  title: 'دوره‌های آموزش فارکس | مقایسه سطح و سرفصل | همراه',
+  description: 'مسیر پایه و تمرین عملی فارکس را بر اساس سطح، پیش‌نیاز، شیوه ارائه و وضعیت ثبت‌نام مقایسه کنید و مسیر مناسب خود را انتخاب کنید.',
+  path: '/programs',
+});
+
+export default function Programs() {
+  const records = published('program');
+  const listed = programs.map(program => {
+    const edited = records.find(item => item.slug === program.slug);
+    return edited ? { ...program, title: edited.title, description: edited.summary, level: edited.courseLevel || program.level, format: edited.deliveryFormat || program.format, saleStatus: edited.saleStatus || program.saleStatus } : program;
+  });
+  const additional = records.filter(item => !programs.some(program => program.slug === item.slug));
+  return <>
+    <PageIntro eyebrow="آموزش‌ها / انتخاب آگاهانه" title="دوره‌های آموزش فارکس برای شروع و تمرین" description="مسیر پایه برای یادگیری از صفر و مسیر تمرین برای تبدیل دانسته‌ها به اجرای منظم طراحی شده‌اند. جزئیات هر مسیر را پیش از ثبت درخواست مقایسه کنید."/>
+    <section className="section"><div className="container program-compare">
+      {listed.map((program,index)=><article className="card program-card interactive-card" data-reveal data-reveal-index={index} key={program.slug}>
+        <div className="program-card-top">{index ? <ListChecks size={30}/> : <BookOpen size={30}/>}<span className="badge">{program.label}</span></div>
+        <p className="eyebrow">{program.audience}</p><h2>{program.title}</h2><p>{program.description}</p>
+        <dl className="program-specs"><div><dt>سطح</dt><dd>{program.level}</dd></div><div><dt>پیش‌نیاز</dt><dd>{program.prerequisite}</dd></div><div><dt>قالب</dt><dd>{program.format}</dd></div></dl>
+        <p className="sale-state"><Check size={17}/>{program.saleStatus === 'closed' ? 'ثبت‌نام بسته است' : program.saleStatus === 'ready' ? 'آماده ثبت‌نام' : 'اطلاع از شرایط پس از ثبت درخواست'}</p>
+        <Link className="btn btn-dark" href={`/programs/${program.slug}`}>دیدن سرفصل و شرایط <ArrowUpLeft size={18}/></Link>
+      </article>)}
+      {additional.map(program=><article className="card program-card" key={program.id}><p className="eyebrow">مسیر یادگیری</p><h2>{program.title}</h2><p>{program.summary}</p><Link className="btn btn-secondary" href={`/programs/${program.slug}`}>جزئیات مسیر <ArrowUpLeft size={18}/></Link></article>)}
+    </div></section>
+    <section className="section program-table-section" data-reveal><div className="container">
+      <div className="section-heading"><div><p className="eyebrow">مقایسه سریع</p><h2>از کدام مسیر شروع کنید؟</h2></div><p>اگر هنوز مفاهیم پایه را نمی‌شناسید، دوره پایه مناسب‌تر است. اگر دانش اولیه دارید اما در اجرای برنامه منظم نیستید، مسیر تمرین را بررسی کنید.</p></div>
+      <div className="table-wrap"><table className="program-table"><caption className="sr-only">مقایسه مسیر پایه و مسیر تمرین فارکس</caption><thead><tr><th scope="col">معیار</th>{listed.map(program=><th scope="col" key={program.slug}>{program.title}</th>)}</tr></thead><tbody><tr><th scope="row">مناسب برای</th>{listed.map(program=><td key={program.slug}>{program.audience}</td>)}</tr><tr><th scope="row">سطح</th>{listed.map(program=><td key={program.slug}>{program.level}</td>)}</tr><tr><th scope="row">پیش‌نیاز</th>{listed.map(program=><td key={program.slug}>{program.prerequisite}</td>)}</tr><tr><th scope="row">شیوه یادگیری</th>{listed.map(program=><td key={program.slug}>{program.format}</td>)}</tr><tr><th scope="row">قدم بعدی</th>{listed.map(program=><td key={program.slug}><Link className="text-link" href={`/programs/${program.slug}`}>دیدن جزئیات {program.label}</Link></td>)}</tr></tbody></table></div>
+    </div></section>
+    <section className="section"><div className="container purchase-disclosure" data-reveal><div><h2>پیش از تصمیم، جزئیات قطعی را بررسی کنید.</h2><p>قیمت، مدرس، مدت، زمان‌بندی، ظرفیت، شیوه برگزاری و حدود پشتیبانی فقط پس از تأیید نهایی در صفحه دوره منتشر می‌شوند. ثبت درخواست به معنی خرید یا رزرو ظرفیت نیست.</p></div><Link className="btn btn-secondary" href="/services">راهنمای انتخاب مسیر</Link></div></section>
+    <NextStep title="برای انتخاب میان دوره و تمرین پرسش دارید؟" offer="consultation"/>
+  </>;
+}

@@ -1,2 +1,3 @@
-export const metadata={title:'رسید درخواست | HMB',robots:{index:false,follow:false}};
-export default function Layout({children}:{children:React.ReactNode}){return children}
+import type { Metadata } from 'next';
+export const metadata: Metadata = { robots: { index: false, follow: false } };
+export default function ReceivedLayout({children}:{children:React.ReactNode}){return children;}

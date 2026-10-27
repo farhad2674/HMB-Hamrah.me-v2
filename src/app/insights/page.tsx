@@ -1,8 +1,29 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpLeft } from 'lucide-react';
 import { articles,published } from '@/lib/content';
 import { PageIntro } from '../approach/PublicShell';
+import { pageMetadata } from '@/lib/site';
+import { BlogCover } from '@/components/BlogVisual';
+
 export const dynamic='force-dynamic';
-export const metadata:Metadata={title:'مجلهٔ همراه',description:'یادداشت‌های آموزشی دربارهٔ آماده‌سازی، ژورنال و مرور تصمیم‌های معاملاتی.'};
-export default function Insights(){const custom=published('article');const merged=[...articles.filter(a=>!custom.some(c=>c.slug===a.slug)),...custom.map(c=>({...c,topic:'یادداشت آموزشی',minutes:''}))];return <><PageIntro eyebrow="مجلهٔ همراه / یک پرسش، یک تمرین" title="برای فکر کردن به تصمیم بعدی." description="یادداشت‌های کوتاه دربارهٔ آمادگی، ثبت تصمیم و مرور اجرا؛ با یک تمرین مشخص که می‌توانید در محیط آزمایشی امتحان کنید."/><section className="section"><div className="container grid-3">{merged.map((a,i)=><article className="card insight-card" key={a.slug}><div className={`article-illustration illustration-${i%3}`} aria-hidden="true"><span>{['↗','≡','↺'][i%3]}</span></div><p className="eyebrow">{a.topic}{a.minutes?` · ${a.minutes} دقیقه مطالعه`:''}</p><h2><Link href={`/insights/${a.slug}`}>{a.title}</Link></h2><p className="muted">{a.summary}</p><Link className="btn btn-secondary" href={`/insights/${a.slug}`}>خواندن یادداشت <ArrowUpLeft size={18}/></Link></article>)}</div></section><section className="section"><div className="container notice"><p>این یادداشت‌ها تمرین آموزشی‌اند؛ توصیهٔ شخصی برای خریدوفروش، خدمات درمانی یا اثبات نتیجهٔ یک روش نیستند.</p></div></section></>}
+export const metadata=pageMetadata({title:'مجله آموزش فارکس و ژورنال معاملاتی | همراه',description:'راهنماها و تمرین‌های منبع‌دار درباره مبانی فارکس، مدیریت ریسک، برنامه معاملاتی، ژورنال و امنیت حساب.',path:'/insights'});
+
+export default function Insights(){
+  const custom=published('article');
+  const merged=[...articles.filter(a=>!custom.some(c=>c.slug===a.slug)).map(article=>({...article,minutes:article.minutes})),...custom.map(article=>({...article,category:article.category||'یادداشت آموزشی',tags:article.tags||[],minutes:article.readingMinutes||''}))];
+  const categories=[...new Set(merged.map(article=>article.category))];
+  return <>
+    <PageIntro eyebrow="مجلهٔ همراه / راهنما، تمرین و منبع" title="از مفهوم تا تصمیمی که می‌شود مرورش کرد." description="مقاله‌های روشن و منبع‌دار دربارهٔ فارکس، ریسک، تمرین، ژورنال و بررسی ارائه‌دهنده؛ بدون وعدهٔ سود و نسخهٔ یکسان برای همه."/>
+    <section className="section"><div className="container">
+      <nav className="blog-category-list" aria-label="دسته‌های مجله">{categories.map(category=><span className="badge" key={category}>{category}</span>)}</nav>
+      <div className="grid-3 blog-grid">{merged.map((article,index)=><article className="card insight-card blog-card" key={article.slug}>
+        <BlogCover title={article.title} category={article.category} index={index}/>
+        <p className="eyebrow">{article.category}{article.minutes?` · ${article.minutes} دقیقه مطالعه`:''}</p>
+        <h2><Link href={`/insights/${article.slug}`}>{article.title}</Link></h2><p className="muted">{article.summary}</p>
+        {!!article.tags.length&&<ul className="tag-list" aria-label="برچسب‌ها">{article.tags.slice(0,4).map(tag=><li key={tag}>{tag}</li>)}</ul>}
+        <Link className="btn btn-secondary" href={`/insights/${article.slug}`}>خواندن مقاله <ArrowUpLeft size={18}/></Link>
+      </article>)}</div>
+    </div></section>
+    <section className="section"><div className="container notice"><p>این مقاله‌ها برای آموزش و تمرین نوشته شده‌اند؛ توصیهٔ شخصی خریدوفروش، تضمین نتیجه یا جایگزین بررسی مقررات محل زندگی شما نیستند.</p></div></section>
+  </>;
+}
