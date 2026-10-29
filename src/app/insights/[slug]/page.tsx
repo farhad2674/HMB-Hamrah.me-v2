@@ -30,16 +30,16 @@ export default async function Article({params}:{params:Promise<{slug:string}>}){
   const image=custom?.socialImage||`${SITE_URL}/insights/${slug}/opengraph-image`;
   const schema={'@context':'https://schema.org','@type':'Article','@id':`${SITE_URL}/insights/${slug}#article`,headline:article.title,description:article.summary,datePublished:publishedAt,dateModified:modified,inLanguage:'fa-IR',mainEntityOfPage:`${SITE_URL}/insights/${slug}`,author:{'@id':organizationSchema['@id']},publisher:{'@id':organizationSchema['@id']},isPartOf:{'@id':`${SITE_URL}/#website`},articleSection:category,keywords:tags,image:[image],about:['آموزش فارکس',category,...tags],citation:citations};
   const related=staticArticle?staticArticle.related.map(relatedSlug=>articles.find(item=>item.slug===relatedSlug)).filter(Boolean):[];
-  return <>
+  return <div className="subpage-shell">
     <JsonLd data={[breadcrumbSchema([{name:'خانه',path:'/'},{name:'مجله',path:'/insights'},{name:article.title,path:`/insights/${slug}`}]),schema]}/>
     <PageIntro eyebrow={`مجلهٔ همراه / ${category}`} title={article.title} description={article.summary}/>
-    <section className="section"><article className="container narrow blog-article">
+    <section className="section" data-reveal><article className="container narrow blog-article">
       <div className="article-meta"><span>ناشر و مسئول تحریریه: همراه</span><span> · </span><time dateTime={modified}>آخرین بازبینی: {new Intl.DateTimeFormat('fa-IR',{dateStyle:'long',timeZone:'Asia/Tehran'}).format(new Date(modified))}</time></div>
       {!!tags.length&&<ul className="tag-list" aria-label="برچسب‌های مقاله">{tags.map(tag=><li key={tag}>{tag}</li>)}</ul>}
       {staticArticle?<><BlogVisual visual={staticArticle.visuals[0]} id={`${slug}-hero`} hero/><BlogBody post={staticArticle}/><BlogSources sources={staticArticle.sources}/></>:<><BlogCover title={article.title} category={category}/><TextBody body={article.body}/>{citations.length>0&&<section className="article-sources"><h2>منابع</h2><ol>{citations.map(url=><li key={url}><a href={url} target="_blank" rel="noreferrer">{url}</a></li>)}</ol></section>}</>}
-      <aside className="notice"><strong>مرز این مقاله</strong><p>این متن برای آموزش و تمرین است و توصیهٔ شخصی سرمایه‌گذاری نیست. مقررات، نوع قرارداد و حمایت‌های قانونی را متناسب با کشور و ارائه‌دهندهٔ خود بررسی کنید.</p></aside>
-      {related.length>0&&<section className="related-posts"><h2>برای ادامهٔ این مسیر</h2><div>{related.slice(0,4).map((item,index)=><Link className="related-post-card" href={`/insights/${item!.slug}`} key={item!.slug}><span>۰{index+1}</span><strong>{item!.title}</strong><small>{item!.category}</small></Link>)}</div></section>}
-      <div className="article-next-links"><h2>این تمرین را ادامه دهید</h2><Link className="btn btn-primary" href="/journal">تمرین در دموی ژورنال</Link><Link className="btn btn-secondary" href="/programs/foundations">دیدن مسیر آموزش فارکس</Link><Link className="text-link" href="/editorial-policy">روش تولید و بازبینی محتوا</Link><Link className="text-link" href="/insights">بازگشت به مجله</Link></div>
+      <aside className="notice"><strong>حدود استفاده از این مطلب</strong><p>این متن برای آموزش و تمرین است و توصیهٔ شخصی سرمایه‌گذاری نیست. مقررات، نوع قرارداد و حمایت‌های قانونی را متناسب با کشور و ارائه‌دهندهٔ خود بررسی کنید.</p></aside>
+      {related.length>0&&<section className="related-posts"><h2>مطالعه مرتبط</h2><div>{related.slice(0,4).map((item,index)=><Link className="related-post-card" href={`/insights/${item!.slug}`} key={item!.slug}><span>۰{index+1}</span><strong>{item!.title}</strong><small>{item!.category}</small></Link>)}</div></section>}
+      <div className="article-next-links"><h2>از مطالعه به تمرین</h2><Link className="btn btn-primary" href="/journal">تمرین در دموی ژورنال</Link><Link className="btn btn-secondary" href="/programs/foundations">دیدن مسیر آموزش فارکس</Link><Link className="text-link" href="/editorial-policy">روش تولید و بازبینی محتوا</Link><Link className="text-link" href="/insights">بازگشت به مجله</Link></div>
     </article></section>
-  </>;
+  </div>;
 }

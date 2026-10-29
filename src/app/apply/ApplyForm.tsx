@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { ApiError, request, offers, Feedback } from '@/components/WorkflowUI';
-import Companion from '@/components/Companion';
 
 const empty = { name: '', contactMethod: 'email', contact: '', offer: 'consultation', experience: 'beginner', difficulty: '', outcome: '', format: 'either', consent: false, marketing: false, website: '' };
 type Field = keyof typeof empty;
@@ -88,23 +87,22 @@ export default function ApplyForm({ initialOffer = 'consultation' }: { initialOf
 
  return <div className="container section application-layout">
   <aside className="application-aside">
-   <Companion mood={step === 2 ? 'complete' : step === 1 ? 'think' : 'welcome'} size="sm" />
-   <p className="eyebrow">قدم اول، شناختن مسیر شماست</p>
-   <h1>از همین‌جا،<br />با هم شروع کنیم.</h1>
-   <p className="muted">کمی از تجربه و نیازتان بگویید تا درخواست شما برای مسیر مناسب بررسی شود.</p>
+   <p className="eyebrow">درخواست بررسی مسیر</p>
+   <h1>انتخاب مسیر،<br />از شناخت شما شروع می‌شود.</h1>
+   <p className="muted">تجربه، موضوع تمرین و راه تماس را بنویسید. این اطلاعات مبنای بررسی تناسب آموزش یا کوچینگ با نیاز شماست.</p>
    <ol className="application-steps">{['مسیر و تجربه شما', 'نیاز و هدف شما', 'راه ارتباطی و ثبت درخواست'].map((s, i) => <li key={s} aria-current={step === i ? 'step' : undefined}><span>{i < step ? <Check size={16} /> : new Intl.NumberFormat('fa-IR').format(i + 1)}</span>{s}</li>)}</ol>
    <div className="notice"><ShieldCheck size={22} /><p>این فرم به معنی رزرو دوره یا پذیرش قطعی نیست. هیچ مبلغی در این مرحله دریافت نمی‌شود.</p></div>
   </aside>
   <div className="card application-form">
    <p className="eyebrow">مرحله {new Intl.NumberFormat('fa-IR').format(step + 1)} از ۳</p>
-   <h2 ref={heading} tabIndex={-1}>{['کدام مسیر به شما نزدیک‌تر است؟', 'دوست دارید روی چه چیزی کار کنید؟', 'چطور با شما در ارتباط باشیم؟'][step]}</h2>
+   <h2 ref={heading} tabIndex={-1}>{['تجربه فعلی و مسیر موردنظر شما چیست؟', 'مسئله و هدف تمرین شما چیست؟', 'اطلاعات تماس و تأیید درخواست'][step]}</h2>
    <form onSubmit={submit} className="stack" noValidate aria-busy={pending}>
     <Feedback error={error} />
     <div className="application-step-panel" key={step}>
     {step === 0 && <>
      <label className="field">مسیر موردنظر<select {...inputProps('offer')} value={data.offer} onChange={e => set('offer', e.target.value)}>{Object.entries(offers).map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>{fieldError('offer')}</label>
      <label className="field">تجربه شما<select {...inputProps('experience')} value={data.experience} onChange={e => set('experience', e.target.value)}><option value="beginner">در شروع یادگیری هستم</option><option value="active">با مفاهیم آشنا هستم و تمرین می‌کنم</option><option value="experienced">تجربه معامله دارم و بازخورد می‌خواهم</option></select>{fieldError('experience')}</label>
-     {['foundations', 'practice', 'events'].includes(data.offer) && <label className="field">ترجیح شما برای برگزاری<select {...inputProps('format')} value={data.format} onChange={e => set('format', e.target.value)}><option value="either">تفاوتی ندارد</option><option value="online">آنلاین</option><option value="in_person">حضوری</option></select>{fieldError('format')}<small className="muted">فرمت و زمان نهایی پس از بررسی ظرفیت اعلام می‌شود.</small></label>}
+     {['foundations', 'practice', 'events'].includes(data.offer) && <label className="field">ترجیح شما برای برگزاری<select {...inputProps('format')} value={data.format} onChange={e => set('format', e.target.value)}><option value="either">تفاوتی ندارد</option><option value="online">آنلاین</option><option value="in_person">حضوری</option></select>{fieldError('format')}<small className="muted">شیوه برگزاری و زمان نهایی پس از بررسی ظرفیت اعلام می‌شود.</small></label>}
      {data.offer === 'events' && <p className="notice">درخواست شما برای اطلاع از برنامه‌های آینده ثبت می‌شود؛ رویداد قطعی یا صندلی رزروشده‌ای در این مرحله وجود ندارد.</p>}
     </>}
     {step === 1 && <>

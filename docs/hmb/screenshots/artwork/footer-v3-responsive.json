@@ -1,0 +1,37 @@
+[
+  {
+    "width": 360,
+    "background": "rgb(248, 247, 243)",
+    "client": 345,
+    "scroll": 345,
+    "stageHeight": 215
+  },
+  {
+    "width": 390,
+    "background": "rgb(248, 247, 243)",
+    "client": 375,
+    "scroll": 375,
+    "stageHeight": 215
+  },
+  {
+    "width": 768,
+    "background": "rgb(248, 247, 243)",
+    "client": 753,
+    "scroll": 753,
+    "stageHeight": 260
+  },
+  {
+    "width": 1024,
+    "background": "rgb(248, 247, 243)",
+    "client": 1009,
+    "scroll": 1009,
+    "stageHeight": 327.671875
+  },
+  {
+    "width": 1440,
+    "background": "rgb(248, 247, 243)",
+    "client": 1425,
+    "scroll": 1425,
+    "stageHeight": 430
+  }
+]

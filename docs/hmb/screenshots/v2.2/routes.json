@@ -1,0 +1,192 @@
+[
+  {
+    "route": "/",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/about",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/approach",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/programs",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/programs/foundations",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/programs/practice",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/coaching",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/journal",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/events",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/services",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/services/consultation",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/services/coaching",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/contact",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/apply",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/apply/received",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/login",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/privacy",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/terms",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/risk-disclosure",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/editorial-policy",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/member",
+    "status": 200,
+    "h1": 0
+  },
+  {
+    "route": "/coach",
+    "status": 200,
+    "h1": 0
+  },
+  {
+    "route": "/admin",
+    "status": 200,
+    "h1": 0
+  },
+  {
+    "route": "/admin/content",
+    "status": 200,
+    "h1": 0
+  },
+  {
+    "route": "/insights/broker-due-diligence",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/demo-account-practice",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/fomo-before-trade",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/forex-market-basics",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/forex-scam-warning-signs",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/leverage-and-margin",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/review-decision-not-result",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/risk-before-trade",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/scenario-vs-prediction",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/useful-trading-journal",
+    "status": 200,
+    "h1": 1
+  },
+  {
+    "route": "/insights/when-not-to-trade",
+    "status": 200,
+    "h1": 1
+  }
+]

@@ -12,11 +12,11 @@ export default function Insights(){
   const custom=published('article');
   const merged=[...articles.filter(a=>!custom.some(c=>c.slug===a.slug)).map(article=>({...article,minutes:article.minutes})),...custom.map(article=>({...article,category:article.category||'یادداشت آموزشی',tags:article.tags||[],minutes:article.readingMinutes||''}))];
   const categories=[...new Set(merged.map(article=>article.category))];
-  return <>
-    <PageIntro eyebrow="مجلهٔ همراه / راهنما، تمرین و منبع" title="از مفهوم تا تصمیمی که می‌شود مرورش کرد." description="مقاله‌های روشن و منبع‌دار دربارهٔ فارکس، ریسک، تمرین، ژورنال و بررسی ارائه‌دهنده؛ بدون وعدهٔ سود و نسخهٔ یکسان برای همه."/>
-    <section className="section"><div className="container">
+  return <div className="subpage-shell">
+    <PageIntro eyebrow="مجله همراه / مفاهیم، روش‌ها و تمرین‌ها" title="برای فهم بازار و شناخت تصمیم‌های خود." description="راهنماهای آموزشی درباره فارکس، مدیریت ریسک، برنامه معاملاتی و ژورنال؛ با توضیح مفاهیم، مثال و تمرین برای ادامه یادگیری."/>
+    <section className="section" data-reveal><div className="container">
       <nav className="blog-category-list" aria-label="دسته‌های مجله">{categories.map(category=><span className="badge" key={category}>{category}</span>)}</nav>
-      <div className="grid-3 blog-grid">{merged.map((article,index)=><article className="card insight-card blog-card" key={article.slug}>
+      <div className="grid-3 blog-grid" data-stagger>{merged.map((article,index)=><article className="card insight-card blog-card" key={article.slug}>
         <BlogCover title={article.title} category={article.category} index={index}/>
         <p className="eyebrow">{article.category}{article.minutes?` · ${article.minutes} دقیقه مطالعه`:''}</p>
         <h2><Link href={`/insights/${article.slug}`}>{article.title}</Link></h2><p className="muted">{article.summary}</p>
@@ -24,6 +24,6 @@ export default function Insights(){
         <Link className="btn btn-secondary" href={`/insights/${article.slug}`}>خواندن مقاله <ArrowUpLeft size={18}/></Link>
       </article>)}</div>
     </div></section>
-    <section className="section"><div className="container notice"><p>این مقاله‌ها برای آموزش و تمرین نوشته شده‌اند؛ توصیهٔ شخصی خریدوفروش، تضمین نتیجه یا جایگزین بررسی مقررات محل زندگی شما نیستند.</p></div></section>
-  </>;
+    <section className="section" data-reveal><div className="container notice"><p>این مقاله‌ها برای آموزش و تمرین نوشته شده‌اند؛ توصیهٔ شخصی خریدوفروش، تضمین نتیجه یا جایگزین بررسی مقررات محل زندگی شما نیستند.</p></div></section>
+  </div>;
 }

@@ -1,0 +1,422 @@
+[
+  {
+    "route": "/",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/journal",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/programs",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/programs/foundations",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/approach",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/insights",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/privacy",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/contact",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/apply",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/login",
+    "width": 360,
+    "client": 345,
+    "h1": 1,
+    "scroll": 345
+  },
+  {
+    "route": "/",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/journal",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/programs",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/programs/foundations",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/approach",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/insights",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/privacy",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/contact",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/apply",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/login",
+    "width": 390,
+    "client": 375,
+    "h1": 1,
+    "scroll": 375
+  },
+  {
+    "route": "/",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/journal",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/programs",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/programs/foundations",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/approach",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/insights",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/privacy",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/contact",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/apply",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/login",
+    "width": 768,
+    "client": 753,
+    "h1": 1,
+    "scroll": 753
+  },
+  {
+    "route": "/",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/journal",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/programs",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/programs/foundations",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/approach",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/insights",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/privacy",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/contact",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/apply",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/login",
+    "width": 1024,
+    "client": 1009,
+    "h1": 1,
+    "scroll": 1009
+  },
+  {
+    "route": "/",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/journal",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/programs",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/programs/foundations",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/approach",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/insights",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/insights/one-page-trading-plan",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/privacy",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/contact",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/apply",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/checkout?course=foundations",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  },
+  {
+    "route": "/login",
+    "width": 1440,
+    "client": 1425,
+    "h1": 1,
+    "scroll": 1425
+  }
+]

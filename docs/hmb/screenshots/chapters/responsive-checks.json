@@ -1,0 +1,85 @@
+[
+  {
+    "delays": [
+      "0ms",
+      "80ms",
+      "160ms",
+      "0ms",
+      "80ms",
+      "160ms",
+      "0ms",
+      "80ms",
+      "160ms"
+    ],
+    "h1Count": 1,
+    "minHeight": "880px",
+    "overflow": false,
+    "padding": "144px",
+    "pageWidth": 1425,
+    "revealDuration": ".65s",
+    "width": 1440
+  },
+  {
+    "chapters": [
+      {
+        "columns": "490.5px 490.5px",
+        "id": "principles",
+        "imageWidth": 490.5,
+        "width": 1085
+      },
+      {
+        "columns": "490.5px 490.5px",
+        "id": "human-guidance",
+        "imageWidth": 490.5,
+        "width": 1085
+      }
+    ],
+    "minHeight": "0px",
+    "overflow": false,
+    "padding": "104px",
+    "pageWidth": 1085,
+    "width": 1100
+  },
+  {
+    "chapters": [
+      {
+        "columns": "713px",
+        "id": "principles",
+        "imageWidth": 560,
+        "width": 753
+      },
+      {
+        "columns": "713px",
+        "id": "human-guidance",
+        "imageWidth": 560,
+        "width": 753
+      }
+    ],
+    "minHeight": "0px",
+    "overflow": false,
+    "padding": "104px",
+    "pageWidth": 753,
+    "width": 768
+  },
+  {
+    "chapters": [
+      {
+        "columns": "335px",
+        "id": "principles",
+        "imageWidth": 335,
+        "width": 375
+      },
+      {
+        "columns": "335px",
+        "id": "human-guidance",
+        "imageWidth": 335,
+        "width": 375
+      }
+    ],
+    "minHeight": "0px",
+    "overflow": false,
+    "padding": "72px",
+    "pageWidth": 375,
+    "width": 390
+  }
+]

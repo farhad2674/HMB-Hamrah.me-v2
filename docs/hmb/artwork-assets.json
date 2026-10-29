@@ -1,0 +1,54 @@
+[
+  {
+    "file": "capability-feedback.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "bytes": 1858887
+  },
+  {
+    "file": "capability-journal.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "bytes": 1924508
+  },
+  {
+    "file": "capability-learning.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "bytes": 2033021
+  },
+  {
+    "file": "footer-companionship.png",
+    "size": [
+      2172,
+      724
+    ],
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 1049917
+  }
+]

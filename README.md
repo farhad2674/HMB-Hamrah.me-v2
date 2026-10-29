@@ -1,6 +1,8 @@
-# HMB — Hamrah website
+# HMB — Hamrah v2.2 Pro
 
 A new Persian-first, RTL website and operational application, built from the supplied HMB master brief. This is a runnable **local project**, not a deployment to hamrah.me.
+
+The v2.2 release carries the original green/lime brand palette through public subpages and operational workspaces, with a scroll-led homepage story, sticky navigation, restrained depth and accessible reveal effects. See [v2.2 direction and verification](docs/hmb/v2.2-pro.md), [public theme](docs/hmb/v2.2-subpages.md), and [workspace theme](docs/hmb/v2.2-workspaces.md). The [v2.1 copy coverage](docs/hmb/v2.1-copy.md) remains applicable.
 
 ## Start
 

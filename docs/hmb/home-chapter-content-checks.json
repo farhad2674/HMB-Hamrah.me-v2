@@ -1,0 +1,11 @@
+{
+  "serverRenderedPrinciples": true,
+  "serverRenderedGuidance": true,
+  "serverRenderedExample": true,
+  "h1Count": 1,
+  "noPendingStateInHTML": true,
+  "stagingNoindex": true,
+  "canonical": true,
+  "reducedMotionStyles": true,
+  "reducedMotionObserver": true
+}

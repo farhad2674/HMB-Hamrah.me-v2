@@ -1,0 +1,55 @@
+.pro-login{position:relative;isolation:isolate;overflow:hidden;background:#101110;color:#f3eee5;padding:78px 0 100px;--login-amber:#e9ad66}
+.pro-login::before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 76% 16%,#77502720,transparent 47%),linear-gradient(90deg,transparent 49.9%,#ffffff03 50%,transparent 50.1%);pointer-events:none}
+.pro-login .pro-login-shell{display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:clamp(48px,8vw,120px);max-width:1180px}
+.pro-login .pro-login-story{position:relative;isolation:isolate;padding-block:12px}
+.pro-login .pro-login-kicker{display:flex;align-items:center;gap:10px;color:#d5b58f;font-size:12px;letter-spacing:.01em;margin:0 0 28px}
+.pro-login .pro-login-kicker>span:first-child{width:6px;height:6px;border-radius:50%;background:var(--login-amber);box-shadow:0 0 16px #e9ad6640}
+.pro-login .pro-login-kicker>span:last-child{margin-inline-start:auto;font-family:Arial,sans-serif;font-size:9px;letter-spacing:.15em;color:#9d958b}
+.pro-login h1{font-size:clamp(44px,5.7vw,75px);line-height:1.55;font-weight:500;letter-spacing:-2.5px;margin:0 0 22px;position:relative}
+.pro-login h1 span{color:var(--login-amber)}
+.pro-login .pro-login-lead{max-width:420px;color:#aaa69e;font-size:15px;line-height:2.15;margin:0;position:relative}
+.pro-login .pro-login-light{position:absolute;inset:54px -60px 75px -40px;z-index:-1;overflow:hidden;opacity:.85;pointer-events:none;mask-image:linear-gradient(transparent,#000 20%,#000 70%,transparent)}
+.pro-login .pro-login-light>span{position:absolute;width:110px;height:300px;left:9%;top:0;transform:rotate(-22deg);border:1px solid #f7c79270;border-radius:80px 80px 8px 8px;background:linear-gradient(90deg,#e9ad6600,#e9ad6609 60%,#e9ad6620);box-shadow:inset -5px 0 23px #e9ad6620,13px 0 45px #e9ad6610}
+.pro-login .pro-login-light>i{position:absolute;width:430px;height:400px;left:-60px;top:100px;transform:rotate(-22deg);background:conic-gradient(from 137deg at 65% 0%,transparent 0deg,#e9ad6600 10deg,#e9ad6615 17deg,#e9ad6604 35deg,transparent 42deg);filter:blur(8px)}
+.pro-login .pro-login-light>b{position:absolute;width:290px;height:290px;left:-10px;top:30px;background:radial-gradient(ellipse,#bb76341a,transparent 70%);filter:blur(20px)}
+.pro-login .pro-login-note{margin-top:38px;border:1px solid #dbb38324;border-radius:15px;background:linear-gradient(130deg,#27231e8a,#191b19b3);padding:21px 24px;box-shadow:0 18px 50px #0000001a;backdrop-filter:blur(12px)}
+.pro-login .pro-login-note-top{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#b9b3a8;font-size:11px}
+.pro-login .pro-login-note-top>span{display:flex;align-items:center;gap:8px}
+.pro-login .pro-login-note-top svg{color:var(--login-amber)}
+.pro-login .pro-login-note-top small{font-size:9px;border:1px solid #ffffff12;border-radius:4px;padding:2px 6px;color:#9c958a}
+.pro-login .pro-login-note>p{font-size:15px;line-height:2.1;margin:18px 0;color:#e4ded4}
+.pro-login .pro-login-note-bottom{display:flex;align-items:center;gap:8px;font-size:10px;color:#aaa396;border-top:1px solid #ffffff0c;padding-top:13px}
+.pro-login .pro-login-note-bottom svg{color:var(--login-amber);flex:none}
+.pro-login .pro-login-preview{display:inline-flex;align-items:center;gap:10px;font-size:12px;color:#b4ada1;margin-top:22px;transition:color .2s}
+.pro-login .pro-login-preview:hover{color:var(--login-amber)}
+.pro-login .pro-login-form-panel{background:linear-gradient(145deg,#242521cc,#181a17e6);border:1px solid #c4b49525;border-top-color:#d3b68b40;border-radius:22px;padding:34px 36px 26px;box-shadow:0 30px 90px #00000035;position:relative}
+.pro-login .pro-login-form-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.pro-login .pro-login-form-head>span:last-child{font-family:Arial,sans-serif;letter-spacing:.16em;font-size:9px;color:#9a9387}
+.pro-login .pro-login-lock{width:47px;height:47px;border-radius:13px;background:linear-gradient(140deg,#4d3c29,#28251f);border:1px solid #d7ac6b33;display:grid;place-items:center;color:#e9b574;box-shadow:inset 0 1px 0 #ffe3b514}
+.pro-login h2{font-size:30px;font-weight:500;letter-spacing:-.8px;line-height:1.7;margin:0 0 7px;color:#f3eee5}
+.pro-login .pro-login-form-copy{font-size:13px;line-height:2;color:#aaa69c;margin:0 0 29px}
+.pro-login .pro-login-form{display:flex;flex-direction:column;gap:9px}
+.pro-login .pro-login-form>label{font-size:12px;color:#d8d2c7;margin-top:10px}
+.pro-login .pro-login-form input{display:block;width:100%;min-width:0;min-height:51px;padding:12px 15px;border-radius:8px;border:1px solid #ffffff1b;background:#111310b3;color:#f3eee5;font-family:inherit;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.pro-login .pro-login-form input::placeholder{color:#77786f;font-size:12px}
+.pro-login .pro-login-form input:focus{border-color:#e9ad6680;box-shadow:0 0 0 3px #e9ad6610}
+.pro-login .pro-login-password{position:relative}
+.pro-login .pro-login-password input{padding-right:50px}
+.pro-login .pro-login-password button{position:absolute;right:3px;top:3px;width:45px;height:45px;border:0;border-radius:6px;display:grid;place-items:center;background:none;color:#b2ac9e;cursor:pointer}
+.pro-login .pro-login-password button:hover{color:#e9ad66;background:#ffffff06}
+.pro-login .pro-login-submit{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:52px;border:1px solid #ffd19a9c;border-radius:8px;background:linear-gradient(160deg,#f2c08a,#dea061);box-shadow:inset 0 1px 0 #ffe9cc80,0 4px 20px #c78c3f1a;color:#271c11;font-family:inherit;font-size:14px;font-weight:600;padding:12px 17px;margin-top:21px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.pro-login .pro-login-submit:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 #ffe9cc80,0 8px 25px #c78c3f26}
+.pro-login .pro-login-submit:disabled{opacity:.6;transform:none;cursor:wait}
+.pro-login .pro-login-support{text-align:center;border-top:1px solid #ffffff0f;padding-top:21px;margin-top:25px;font-size:11px}
+.pro-login .pro-login-support p{color:#aaa498;margin:0 0 6px;line-height:1.9}
+.pro-login .pro-login-support a{display:inline-flex;align-items:center;gap:6px;color:#dfb87f;font-size:12px}
+.pro-login .pro-login-legal{display:flex;gap:8px;border-top:1px solid #ffffff0d;margin-top:23px;padding-top:17px;color:#9e9a8e;align-items:flex-start}
+.pro-login .pro-login-legal svg{flex:none;margin-top:5px}
+.pro-login .pro-login-legal p{font-size:10px;line-height:1.95;margin:0}
+.pro-login .pro-login-legal a{color:#c1b6a4;text-decoration:underline;text-underline-offset:3px}
+.pro-login .pro-login-form .error{margin:0 0 4px;background:#502c254d;border:1px solid #e29b8040;color:#efb69d;padding:12px;font-size:12px;line-height:1.9;border-radius:8px}
+.pro-login :is(button,a):focus-visible{outline:2px solid #e9ad66;outline-offset:5px}
+@media(prefers-reduced-motion:no-preference){.pro-login .pro-login-story,.pro-login .pro-login-form-panel{animation:login-settle .8s cubic-bezier(.2,.7,.2,1) both}.pro-login .pro-login-form-panel{animation-delay:.12s}@keyframes login-settle{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:none}}}
+@media(max-width:900px){.pro-login{padding:54px 0 65px}.pro-login .pro-login-shell{gap:35px;grid-template-columns:1fr 1fr}.pro-login .pro-login-form-panel{padding:28px 23px 24px}.pro-login h1{font-size:46px;letter-spacing:-1.5px}.pro-login .pro-login-kicker>span:last-child{display:none}.pro-login .pro-login-note{padding:18px}}
+@media(max-width:680px){.pro-login{padding:34px 0 48px}.pro-login .pro-login-shell{grid-template-columns:1fr;gap:30px;max-width:480px}.pro-login h1{font-size:46px;line-height:1.45;margin-bottom:16px}.pro-login .pro-login-kicker{margin-bottom:17px}.pro-login .pro-login-kicker>span:last-child{display:inline}.pro-login .pro-login-lead{font-size:13px}.pro-login .pro-login-note{display:none}.pro-login .pro-login-preview{margin-top:15px;font-size:11px}.pro-login .pro-login-light{inset:0 -20px -20px 0;opacity:.55}.pro-login .pro-login-light>span{height:200px;width:80px;left:7%}.pro-login .pro-login-form-panel{padding:26px 24px 22px;border-radius:17px}.pro-login .pro-login-form-head{margin-bottom:20px}.pro-login h2{font-size:27px}.pro-login .pro-login-form-copy{margin-bottom:17px}}
+@media(prefers-reduced-motion:reduce){.pro-login *{animation:none!important;transition:none!important}}

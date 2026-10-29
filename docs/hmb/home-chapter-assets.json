@@ -1,0 +1,20 @@
+[
+  {
+    "file": "public/images/hamrah/hamrah-principles-sculpture.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 82212,
+    "hasAlpha": true,
+    "alphaMin": 0,
+    "alphaMax": 255
+  },
+  {
+    "file": "public/images/hamrah/hamrah-guidance-sculpture.webp",
+    "width": 1200,
+    "height": 900,
+    "bytes": 72798,
+    "hasAlpha": true,
+    "alphaMin": 0,
+    "alphaMax": 255
+  }
+]
