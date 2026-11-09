@@ -20,7 +20,9 @@ export default function Page() {
     setError('');
     try {
       const data = await request<{ user: User }>('/api/auth', 'POST', { email, password });
-      location.assign(homeFor(data.user.role));
+      const next = new URLSearchParams(window.location.search).get('next') ?? '';
+      const courseReturn = data.user.role === 'member' && /^\/programs\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(next);
+      location.assign(courseReturn ? next : homeFor(data.user.role));
     } catch (cause) {
       setError((cause as Error).message);
       setPending(false);
@@ -39,7 +41,7 @@ export default function Page() {
           <p>«شرایط ورود کامل نبود. این بار صبر کردم و دلیل تصمیمم را نوشتم.»</p>
           <div className="pro-login-note-bottom"><Check size={15} /><span>موضوع مرور: پایبندی به برنامه، پیش از نتیجه</span></div>
         </div>
-        <Link className="pro-login-preview" href="/journal">آشنایی با ژورنال همراه <ArrowUpLeft size={17} /></Link>
+        <Link className="pro-login-preview" href="/dashboard-preview">مشاهدهٔ نمونهٔ داشبورد اعضا <ArrowUpLeft size={17} /></Link>
       </div>
 
       <div className="pro-login-form-panel">

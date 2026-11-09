@@ -1,0 +1,136 @@
+/* Shared geometry and brand roles for the next public website. */
+:root {
+  --nv-page: #f6f6ef;
+  --nv-panel: #fff;
+  --nv-sage: #eaf0e3;
+  --nv-ink: #18372f;
+  --nv-muted: #5a6c60;
+  --nv-forest: #183c32;
+  --nv-lime: #d9eea3;
+  --nv-line: #dce3d2;
+  --nv-backdrop: #12281f80;
+  --nv-shadow: #18372f12;
+  --nv-radius: 24px;
+  --nv-container: 1280px;
+  --nv-gutter: 40px;
+  --nv-gap: 32px;
+  --nv-space: 96px;
+}
+.public-content { background: var(--nv-page); color: var(--nv-ink); }
+.public-content .container { width: min(var(--nv-container), calc(100% - 2 * var(--nv-gutter))); }
+.public-content .narrow { max-width: 760px; }
+.public-content :is(h1,h2,h3) { letter-spacing: normal; }
+.public-content :is(a,button,input,select,textarea):focus-visible { outline: 3px solid var(--nv-ink); outline-offset: 5px; }
+.public-content .btn { min-height: 48px; font-size: 1rem; padding: 12px 24px; border-radius: 12px; gap: 12px; line-height: 1.6; }
+.public-content :is(.btn-primary,.btn-dark) { background: var(--nv-forest); color: var(--nv-panel); }
+.public-content .btn-secondary { background: transparent; color: var(--nv-ink); border: 1px solid var(--nv-line); }
+.public-content .eyebrow { font-size: .875rem; letter-spacing: normal; color: var(--nv-muted); }
+.public-content .text-link { font-size: 1rem; }
+.public-content .badge { font-size: .8125rem; line-height: 1.8; border-radius: 20px; background: var(--nv-sage); color: var(--nv-ink); }
+.public-content .subpage-shell { background: var(--nv-page); color: var(--nv-ink); overflow: visible; }
+.public-content .subpage-shell > .section { padding-block: var(--nv-space); }
+.public-content .subpage-shell > .section + .section { padding-top: 0; }
+.public-content .subpage-shell :is(.section p,.section li,.prose) { font-size: 1rem; line-height: 2; }
+.public-content .subpage-shell .section h2 { font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 600; line-height: 1.65; letter-spacing: normal; }
+.public-content .subpage-shell .section h3 { font-size: 1.25rem; line-height: 1.7; letter-spacing: normal; }
+.public-content .subpage-shell .section .eyebrow { font-size: .875rem; }
+.public-content .subpage-shell .section :is(.muted,.prose) { color: var(--nv-muted); }
+.public-content .subpage-shell .section .card {
+  border: 1px solid var(--nv-line); border-radius: var(--nv-radius);
+  padding: 32px; background: var(--nv-panel); box-shadow: none;
+}
+.public-content .subpage-shell .section .btn { border-radius: 12px; min-height: 48px; }
+.public-content .subpage-shell .section .grid-2 { gap: 48px; }
+.public-content .subpage-shell .section .grid-3 { gap: 24px; }
+.public-content .subpage-shell .section .badge { font-size: .8125rem; border-color: var(--nv-line); color: var(--nv-ink); background: var(--nv-sage); }
+.public-content .nv-intro { background: var(--nv-sage); margin: 24px var(--nv-gutter) 0; padding: 0; border: 0; border-radius: var(--nv-radius); overflow: hidden; }
+.public-content .nv-intro .container { width: min(var(--nv-container), calc(100% - 80px)); }
+.nv-breadcrumb { display: flex; align-items: center; gap: 12px; min-height: 64px; font-size: .875rem; color: var(--nv-muted); }
+.nv-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; color: var(--nv-ink); }
+.nv-intro-grid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); align-items: center; gap: 48px; padding-block: 24px 48px; }
+.nv-intro-copy { max-width: 760px; }
+.public-content .nv-intro h1 { font-size: clamp(1.75rem,3.1vw,2.75rem); font-weight: 600; line-height: 1.65; letter-spacing: normal; margin: 16px 0; }
+.public-content .nv-intro-copy > p:last-child { font-size: 1.125rem; line-height: 2; color: var(--nv-muted); }
+.nv-intro-art { position: relative; height: 288px; min-width: 0; mix-blend-mode: multiply; }
+.nv-intro-art img { object-fit: contain; }
+.nv-intro[data-intro-kind=policy] .nv-intro-art { height: 208px; }
+.public-content .nv-next-step { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 48px; border-radius: var(--nv-radius); background: var(--nv-forest); color: var(--nv-panel); }
+.public-content .nv-next-step > div { max-width: 720px; }
+.public-content .nv-next-step .eyebrow { color: var(--nv-lime); }
+.public-content .nv-next-step p { color: var(--nv-sage); }
+.public-content .nv-next-step .btn { flex: none; background: var(--nv-lime); color: var(--nv-ink); }
+.public-content .nv-next-step :is(a,button):focus-visible { outline-color: var(--nv-lime); }
+.public-content .subpage-shell .program-compare { gap: 32px; }
+.public-content .subpage-shell .program-card { padding: 32px !important; overflow: visible; background: var(--nv-panel); }
+.public-content .subpage-shell .program-card::before { display: none; }
+.public-content .subpage-shell .program-card h2 { min-height: 0; font-size: 1.75rem; }
+.public-content .program-card .nv-program-art { position: relative; width: 100%; height: 220px; flex-shrink: 0; border-radius: 16px; background: var(--nv-sage); margin-bottom: 24px; overflow: hidden; }
+.nv-program-art img { object-fit: contain; padding: 12px; mix-blend-mode: multiply; }
+.public-content .subpage-shell .program-card-top { padding: 0; border: 0; margin-bottom: 16px; }
+.public-content .subpage-shell .program-specs :is(dt,dd) { font-size: .875rem; color: var(--nv-muted); }
+.public-content .subpage-shell .sale-state { font-size: .875rem !important; color: var(--nv-muted); }
+.public-content .subpage-shell .course-summary-card { position: static; background: var(--nv-forest); color: var(--nv-panel); border-radius: var(--nv-radius); padding: 32px; box-shadow: none; }
+.public-content .subpage-shell .course-summary-card :is(dt,dd,p) { color: var(--nv-sage); font-size: .875rem; }
+.public-content .course-summary-card .btn-primary { background: var(--nv-lime); color: var(--nv-ink); }
+.public-content .course-summary-card .btn-secondary { color: var(--nv-panel); border-color: var(--nv-sage); }
+.public-content .course-summary-card .badge { color: var(--nv-ink); }
+.public-content .subpage-shell .course-summary-card .course-unknowns { background: var(--nv-sage); border-radius: 12px; padding: 16px; }
+.public-content .subpage-shell .course-summary-card .course-unknowns p { color: var(--nv-ink); font-size: .875rem; }
+.public-content .course-summary-card :is(a,button):focus-visible { outline-color: var(--nv-lime); }
+.public-content .subpage-shell .course-jump-nav a { font-size: .875rem; padding: 12px 16px; border-radius: 12px; }
+.public-content .subpage-shell .course-syllabus { background: var(--nv-sage); color: var(--nv-ink); }
+.public-content .subpage-shell .course-syllabus .eyebrow { color: var(--nv-muted); }
+.public-content .subpage-shell .syllabus-list { gap: 16px; }
+.public-content .subpage-shell .syllabus-list article { background: var(--nv-panel); color: var(--nv-ink); border: 1px solid var(--nv-line); border-radius: 16px; padding: 24px; min-height: 104px; }
+.public-content .subpage-shell .syllabus-list article > span { color: var(--nv-muted); }
+.public-content .subpage-shell .section :is(.purchase-disclosure,.notice,.course-fit-note) { border-radius: 20px; background: var(--nv-sage); border-color: var(--nv-line); }
+.public-content .subpage-shell .blog-grid .blog-card { padding: 16px 16px 24px; display: flex; flex-direction: column; }
+.public-content .subpage-shell .blog-card h2 { font-size: 1.25rem; line-height: 1.8; margin-bottom: 12px; }
+.public-content .subpage-shell .blog-card > :is(h2,p,.tag-list,.btn) { margin-inline: 8px; }
+.public-content .blog-card .blog-cover { border-radius: 16px; }
+.public-content .blog-card .btn { margin-top: auto; }
+.public-content .subpage-shell .tag-list { margin-bottom: 24px; }
+.public-content .subpage-shell .tag-list li { font-size: .8125rem; line-height: 1.8; }
+.public-content .subpage-shell .blog-category-list { margin-bottom: 32px; }
+.public-content .subpage-shell .course-faq details { padding: 24px; border: 1px solid var(--nv-line); border-radius: 16px; background: var(--nv-panel); margin-block: 12px; }
+.public-content .subpage-shell .course-faq summary { min-height: 44px; font-size: 1rem; }
+.public-content .subpage-shell .table-wrap { border-radius: 20px; }
+.public-content .subpage-shell th { background: var(--nv-sage); }
+.public-content .subpage-shell .journal-demo-wrap { border-radius: var(--nv-radius); background: var(--nv-panel); padding: 32px; border: 1px solid var(--nv-line); }
+@media (max-width:1199px) {
+  :root { --nv-gutter: 32px; --nv-space: 80px; --nv-gap: 24px; }
+}
+@media (max-width:949px) {
+  :root { --nv-gutter: 24px; --nv-space: 64px; }
+  .public-content .nv-intro .container { width: calc(100% - 48px); }
+  .nv-intro-grid { gap: 24px; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); }
+  .nv-intro-art { height: 224px; }
+  .public-content .nv-next-step { flex-direction: column; align-items: flex-start; padding: 32px; gap: 24px; }
+}
+@media (max-width:599px) {
+  :root { --nv-gutter: 16px; --nv-space: 48px; --nv-gap: 16px; }
+  .public-content .nv-intro { margin: 16px 16px 0; }
+  .public-content .nv-intro .container { width: calc(100% - 32px); }
+  .nv-intro-grid { grid-template-columns: minmax(0,1fr); gap: 16px; padding-block: 8px 24px; }
+  .nv-intro-copy > p:last-child { font-size: 1rem; }
+  .nv-intro-art { height: 180px; }
+  .nv-intro[data-intro-kind=policy] .nv-intro-art { display: none; }
+  .public-content .subpage-shell .section .card { padding: 24px; }
+  .public-content .subpage-shell .program-card { padding: 20px !important; }
+  .public-content .subpage-shell .program-compare { gap: 24px; }
+  .public-content .subpage-shell .course-summary-card { padding: 24px; }
+  .public-content .subpage-shell .section .grid-2 { gap: 24px; }
+  .public-content .subpage-shell .section :is(.notice,.purchase-disclosure) { padding: 24px; }
+  .public-content .nv-next-step { padding: 24px; }
+  .public-content .nv-next-step .btn { width: 100%; }
+  .public-content .subpage-shell .blog-grid .blog-card { padding: 12px 12px 24px; }
+  .public-content .subpage-shell .journal-demo-wrap { padding: 16px; }
+}
+/* Existing motion hooks use short, small reveals and keep the document readable. */
+.public-content { --reveal-distance: 12px; --reveal-duration: .3s; }
+@media (hover:hover) and (pointer:fine) {
+  .public-content .interactive-card:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .public-content [data-parallax] { translate: none; }
+}

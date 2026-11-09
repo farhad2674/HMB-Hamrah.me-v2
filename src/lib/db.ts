@@ -2,6 +2,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
+import { academySchema } from './academy-schema.ts';
 
 export type Role = 'member'|'coach'|'editor'|'reviewer'|'admin';
 export type User = {id:string;name:string;email:string;role:Role;active:boolean;coachId:string|null};
@@ -13,8 +14,10 @@ export function db(){
  if(singleton)return singleton;
  const path=process.env.HMB_DATABASE_PATH||resolve(process.cwd(),'data/hmb.sqlite');
  if(path!==':memory:')mkdirSync(dirname(path),{recursive:true,mode:0o700});
- singleton=new DatabaseSync(path);
- singleton.exec(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
+ const database = new DatabaseSync(path);
+ singleton = database;
+ try {
+ database.exec(`PRAGMA busy_timeout=5000; PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL;
  CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,name TEXT NOT NULL,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL,role TEXT NOT NULL,active INTEGER NOT NULL DEFAULT 1,coach_id TEXT REFERENCES users(id),created_at TEXT NOT NULL);
  CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,expires_at INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS applications(id TEXT PRIMARY KEY,reference TEXT UNIQUE NOT NULL,idempotency_key TEXT UNIQUE NOT NULL,payload_hash TEXT NOT NULL,data TEXT NOT NULL,status TEXT NOT NULL,assigned_to TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
@@ -25,7 +28,37 @@ export function db(){
  CREATE TABLE IF NOT EXISTS metrics(event TEXT NOT NULL,properties TEXT NOT NULL,day TEXT NOT NULL,count INTEGER NOT NULL DEFAULT 1,PRIMARY KEY(event,properties,day));
  CREATE TABLE IF NOT EXISTS rate_limits(key TEXT PRIMARY KEY,count INTEGER NOT NULL,reset_at INTEGER NOT NULL);
  CREATE INDEX IF NOT EXISTS entries_owner_idx ON entries(owner_id); CREATE INDEX IF NOT EXISTS applications_assignment_idx ON applications(assigned_to,status);
- PRAGMA user_version=1;`);
+ `);
+ // Version 1 sessions used a fixed eight-hour lifetime and stored no public ID.
+   transaction(() => {
+     const version = database.prepare('PRAGMA user_version').get()!.user_version;
+     if (Number(version) < 2) database.exec(`
+       CREATE TABLE sessions_v2 (
+         token_hash TEXT PRIMARY KEY,
+         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+         expires_at INTEGER NOT NULL,
+         public_id TEXT NOT NULL UNIQUE,
+         created_at INTEGER NOT NULL
+       );
+       INSERT INTO sessions_v2
+         SELECT token_hash, user_id, expires_at, lower(hex(randomblob(16))),
+                expires_at - (8 * 60 * 60 * 1000)
+         FROM sessions;
+       DROP TABLE sessions;
+       ALTER TABLE sessions_v2 RENAME TO sessions;
+       CREATE INDEX sessions_owner_idx ON sessions(user_id, expires_at);
+       PRAGMA user_version=2;
+     `);
+     if (Number(version) < 3) {
+       database.exec(academySchema);
+       database.exec('PRAGMA user_version=3');
+     }
+   });
+ } catch (error) {
+   database.close();
+   singleton = undefined;
+   throw error;
+ }
  return singleton;
 }
 export function transaction<T>(fn:()=>T):T{ const database=db();database.exec('BEGIN IMMEDIATE');try{const result=fn();database.exec('COMMIT');return result;}catch(e){database.exec('ROLLBACK');throw e;} }
@@ -50,8 +83,15 @@ export function getPublishedContent(type?:string,slug?:string):Content[]{const r
 export function listContent(user:User){requireRole(user,['admin','editor']);return db().prepare('SELECT data FROM content ORDER BY updated_at DESC').all().map((r:any)=>JSON.parse(r.data) as Content);}
 export function saveContent(user:User,input:any,id?:string){requireRole(user,['admin','editor']);return transaction(()=>{let old:Content|undefined;if(id){const row=db().prepare('SELECT data FROM content WHERE id=?').get(id) as any;if(!row)throw new DomainError('محتوا یافت نشد.',404);old=JSON.parse(row.data);}const data:Content={...old,...input,id:id||randomUUID(),createdAt:old?.createdAt||now(),updatedAt:now()};const states:Record<string,string[]>={draft:['draft','in_review'],in_review:['in_review','draft','published'],published:['published','draft','archived'],archived:['archived','draft']};if(!states[old?.status||'draft']?.includes(data.status))throw new DomainError('ابتدا محتوا را برای بازبینی ارسال کنید.',409);try{db().prepare('INSERT INTO content VALUES(?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET type=excluded.type,slug=excluded.slug,data=excluded.data,status=excluded.status,updated_at=excluded.updated_at').run(data.id,data.type,data.slug,JSON.stringify(data),data.status,data.createdAt,data.updatedAt);}catch(error){if((error as Error).message.includes('UNIQUE'))throw new DomainError('این نشانی محتوا قبلاً استفاده شده است.',409);throw error;}audit(user.id,'content.'+data.status,data.id);return data;});}
 export function recordMetric(event:string,properties:Record<string,string>){db().prepare('INSERT INTO metrics VALUES(?,?,?,1) ON CONFLICT(event,properties,day) DO UPDATE SET count=count+1').run(event,JSON.stringify(properties),now().slice(0,10));}
-export function exportMember(user:User){if(user.role!=='member')throw new DomainError('این مسیر برای اعضا است.',403);audit(user.id,'member.export',user.id);return {profile:user,entries:db().prepare('SELECT data FROM entries WHERE owner_id=?').all(user.id).map((r:any)=>JSON.parse(r.data)),exportedAt:now()};}
+export function exportMember(user:User){
+ if(user.role!=='member')throw new DomainError('این مسیر برای اعضا است.',403);
+ const database=db();
+ const enrollments=database.prepare('SELECT course_slug AS courseSlug, active, enrolled_at AS enrolledAt FROM academy_enrollments WHERE user_id=? ORDER BY enrolled_at').all(user.id);
+ const completions=database.prepare('SELECT course_slug AS courseSlug, lesson_slug AS lessonSlug, completed_at AS completedAt FROM academy_completions WHERE user_id=? ORDER BY completed_at').all(user.id);
+ audit(user.id,'member.export',user.id);
+ return {profile:user,entries:database.prepare('SELECT data FROM entries WHERE owner_id=?').all(user.id).map((r:any)=>JSON.parse(r.data)),learning:{enrollments,completions},exportedAt:now()};
+}
 export function requestDeletion(user:User,reason:string){const pending=db().prepare("SELECT id FROM deletion_requests WHERE user_id=? AND status='pending'").get(user.id) as any;if(pending)return {reference:pending.id};const id=randomUUID();db().prepare('INSERT INTO deletion_requests(id,user_id,reason,created_at) VALUES(?,?,?,?)').run(id,user.id,reason,now());audit(user.id,'member.deletion_requested',id);return {reference:id};}
 
 export function listDeletionRequests(user:User){requireRole(user,['admin']);audit(user.id,'deletion_requests.read','deletion_requests:all');return db().prepare('SELECT d.id,d.reason,d.status,d.created_at AS createdAt,u.id AS userId,u.name,u.email FROM deletion_requests d JOIN users u ON d.user_id=u.id ORDER BY d.created_at DESC').all();}
-export function resolveDeletionRequest(user:User,id:string,action:'fulfill'|'decline'){requireRole(user,['admin']);return transaction(()=>{const row=db().prepare('SELECT * FROM deletion_requests WHERE id=?').get(id) as any;if(!row)throw new DomainError('درخواست یافت نشد.',404);if(row.status!=='pending')throw new DomainError('درخواست قبلاً بررسی شده است.',409);const target=getUser(row.user_id);if(!target||target.role!=='member')throw new DomainError('حذف خودکار فقط برای حساب عضو ممکن است.',409);if(action==='fulfill'){db().prepare('DELETE FROM entries WHERE owner_id=?').run(target.id);db().prepare('DELETE FROM sessions WHERE user_id=?').run(target.id);db().prepare('UPDATE users SET name=?,email=?,password_hash=?,active=0,coach_id=NULL WHERE id=?').run('حساب حذف‌شده',randomUUID()+'@deleted.invalid','disabled',target.id);db().prepare('UPDATE deletion_requests SET reason=? WHERE user_id=?').run('',target.id);}db().prepare('UPDATE deletion_requests SET status=? WHERE id=?').run(action==='fulfill'?'fulfilled':'declined',id);audit(user.id,'member.deletion_'+action,id);return {ok:true};});}
+export function resolveDeletionRequest(user:User,id:string,action:'fulfill'|'decline'){requireRole(user,['admin']);return transaction(()=>{const row=db().prepare('SELECT * FROM deletion_requests WHERE id=?').get(id) as any;if(!row)throw new DomainError('درخواست یافت نشد.',404);if(row.status!=='pending')throw new DomainError('درخواست قبلاً بررسی شده است.',409);const target=getUser(row.user_id);if(!target||target.role!=='member')throw new DomainError('حذف خودکار فقط برای حساب عضو ممکن است.',409);if(action==='fulfill'){db().prepare('DELETE FROM academy_enrollments WHERE user_id=?').run(target.id);db().prepare('DELETE FROM entries WHERE owner_id=?').run(target.id);db().prepare('DELETE FROM sessions WHERE user_id=?').run(target.id);db().prepare('UPDATE users SET name=?,email=?,password_hash=?,active=0,coach_id=NULL WHERE id=?').run('حساب حذف‌شده',randomUUID()+'@deleted.invalid','disabled',target.id);db().prepare('UPDATE deletion_requests SET reason=? WHERE user_id=?').run('',target.id);}db().prepare('UPDATE deletion_requests SET status=? WHERE id=?').run(action==='fulfill'?'fulfilled':'declined',id);audit(user.id,'member.deletion_'+action,id);return {ok:true};});}

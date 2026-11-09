@@ -1,0 +1,54 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { DatabaseSync } from 'node:sqlite';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { db, DomainError } from '../src/lib/db.ts';
+import { login, listSessions, provisionUser, revokeSession, sessionUser } from '../src/lib/auth.ts';
+
+test('upgrades existing sessions and revokes only a different owned session', t => {
+  const directory = mkdtempSync(join(tmpdir(), 'hmb-session-test-'));
+  const filename = join(directory, 'legacy.sqlite');
+  process.env.HMB_DATABASE_PATH = filename;
+  const old = new DatabaseSync(filename);
+  old.exec(`
+    CREATE TABLE users(id TEXT PRIMARY KEY,name TEXT NOT NULL,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL,role TEXT NOT NULL,active INTEGER NOT NULL,coach_id TEXT,created_at TEXT NOT NULL);
+    CREATE TABLE sessions(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),expires_at INTEGER NOT NULL);
+    INSERT INTO users VALUES ('legacy','Legacy','legacy@example.test','disabled','member',1,NULL,'2026-01-01');
+    PRAGMA user_version=1;
+  `);
+  const legacyHash = createHash('sha256').update('legacy-cookie').digest('hex');
+  const expiry = Date.now() + 3600000;
+  old.prepare('INSERT INTO sessions VALUES (?,?,?)').run(legacyHash, 'legacy', expiry);
+  old.close();
+  const database = db();
+  t.after(() => { database.close(); rmSync(directory, { recursive: true, force: true }); });
+  const request = (token: string) => new Request('http://localhost', {headers: {cookie: 'hmb_session=' + token}});
+  const [legacy] = listSessions(request('legacy-cookie'));
+  assert.equal(legacy.current, true);
+  assert.equal(legacy.expiresAt, new Date(expiry).toISOString());
+  assert.notEqual(legacy.id, legacyHash);
+
+  const email = 'owner@example.test';
+  const password = 'member-secret-password';
+  provisionUser({name:'Owner', email, password, role:'member'});
+  const first = login(email, password);
+  const second = login(email, password);
+  const active = request(first.token);
+  const [current, other] = listSessions(active);
+  assert.deepEqual(Object.keys(current).sort(), ['createdAt','current','expiresAt','id']);
+  assert.equal(current.current, true);
+  assert.equal(other.current, false);
+  assert.equal(listSessions(active).length, 2);
+  assert.throws(() => revokeSession(active, current.id), (e: unknown) => e instanceof DomainError && e.status === 409);
+  assert.throws(() => revokeSession(active, legacy.id), (e: unknown) => e instanceof DomainError && e.status === 404);
+  assert.deepEqual(revokeSession(active, other.id), {ok:true});
+  assert.equal(sessionUser(second.token), null);
+  assert.equal(sessionUser(first.token)?.id, first.user.id);
+  assert.equal(sessionUser('legacy-cookie')?.id, 'legacy');
+  assert.throws(() => listSessions(request(second.token)), (e: unknown) => e instanceof DomainError && e.status === 401);
+  database.prepare('UPDATE sessions SET expires_at = 0 WHERE public_id = ?').run(legacy.id);
+  assert.throws(() => listSessions(request('legacy-cookie')), (e: unknown) => e instanceof DomainError && e.status === 401);
+});

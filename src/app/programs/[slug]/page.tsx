@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpLeft, Check, Clock3, GraduationCap, MessagesSquare, ShieldCheck } from 'lucide-react';
 import { CourseGeoAnswer } from '@/components/GeoAnswers';
+import { getAcademyCourse } from '@/lib/academy';
+import AcademyDetail from '../AcademyDetail';
 import { programs, published } from '@/lib/content';
 import { breadcrumbSchema, JsonLd, organizationSchema, pageMetadata, SITE_URL } from '@/lib/site';
 import { PageIntro, TextBody } from '../../approach/PublicShell';
@@ -12,6 +14,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const base = programs.find(item => item.slug === slug);
   const edited = published('program').find(item => item.slug === slug);
+  if (!base && !edited) {
+    const course = getAcademyCourse(slug);
+    if (course) return pageMetadata({ title: course.title + ' | آکادمی همراه', description: course.summary, path: '/programs/' + slug, image: course.cover, imageAlt: course.title });
+  }
   const title = edited?.seoTitle || (slug === 'foundations' ? 'دوره آموزش فارکس از صفر | سرفصل و شرایط ثبت‌نام | همراه' : edited?.title || base?.title || 'مسیر پیدا نشد');
   const description = edited?.metaDescription || (slug === 'foundations' ? 'فارکس را از شناخت بازار و نمودار تا مدیریت ریسک و پلن معاملاتی یاد بگیرید. سرفصل، پیش‌نیاز و وضعیت ثبت‌نام را ببینید و درخواست مشاوره ثبت کنید.' : edited?.summary || base?.description || 'جزئیات مسیر آموزشی همراه.');
   return pageMetadata({ title, description, path: `/programs/${slug}`, image: edited?.socialImage, imageAlt: edited?.imageAlt });
@@ -21,7 +27,11 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const base = programs.find(item => item.slug === slug);
   const edited = published('program').find(item => item.slug === slug);
-  if (!base && !edited) notFound();
+  if (!base && !edited) {
+    const course = getAcademyCourse(slug);
+    if (!course) notFound();
+    return <AcademyDetail course={course}/>;
+  }
   const program = base ? {
     ...base,
     title: edited?.title || base.title,

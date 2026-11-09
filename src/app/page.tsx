@@ -1,37 +1,78 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowUpLeft, ArrowDown, BookOpen, NotebookPen, MessageSquareText, MoveLeft } from 'lucide-react';
+import { ArrowUpLeft, BookOpen, Check, LibraryBig, MessageSquareText, NotebookPen, PanelsTopLeft } from 'lucide-react';
 import DecisionStudio from '@/components/DecisionStudio';
-import ScrollJourney from '@/components/ScrollJourney';
-import { FAQ, PathPicker } from '@/components/HomeExperience';
+import { BlogCover } from '@/components/BlogVisual';
+import { FAQ } from '@/components/HomeExperience';
 import { articles } from '@/lib/content';
-import { PrinciplesChapter, GuidanceChapter } from '@/components/HomeChapters';
-import './home-chapters.css';
+import { listAcademyCourses } from '@/lib/academy';
+import './atlas-home.css';
 
-const capabilities = [
-  { number: '01', title: 'دانشی که به کار می‌آید.', text: 'از ساختار بازار تا مدیریت ریسک؛ مفاهیم را با تمرینی دنبال کنید که بتوانید دلیل انجامش را توضیح دهید.', href: '/programs/foundations', link: 'مسیر یادگیری', icon: BookOpen, art: 'learning' },
-  { number: '02', title: 'تصمیمی که ثبت می‌شود.', text: 'پیش از اجرا، برنامه را بنویسید. پس از آن، فاصلهٔ میان قصد و عمل را در ژورنال ببینید.', href: '/journal', link: 'کاوش در ژورنال', icon: NotebookPen, art: 'journal' },
-  { number: '03', title: 'بازخوردی که جهت می‌دهد.', text: 'با مرور تصمیم‌های ثبت‌شده، مسئلهٔ مشخصی برای گفت‌وگو و تمرین بعدی پیدا کنید.', href: '/coaching', link: 'آشنایی با کوچینگ', icon: MessageSquareText, art: 'feedback' },
+export const dynamic = 'force-dynamic';
+
+const paths = [
+  { title: 'از پایه، با شناخت بازار', audience: 'برای شروع یادگیری', description: 'مفاهیم فارکس، ساختار نمودار و مدیریت ریسک را یاد بگیرید و برای یک موقعیت فرضی، برنامه بنویسید.', href: '/programs/foundations', action: 'سرفصل‌های آموزش پایه', image: 'capability-learning.png', icon: BookOpen },
+  { title: 'از دانستن، به اجرای منظم', audience: 'برای ادامهٔ تمرین', description: 'شروط تصمیم را روشن کنید، در محیط آزمایشی تمرین کنید و فاصلهٔ اجرای خود با برنامه را ببینید.', href: '/programs/practice', action: 'مسیر تمرین و مدیریت ریسک', image: 'capability-journal.png', icon: NotebookPen },
+  { title: 'یک نگاه دیگر، به تصمیم شما', audience: 'برای مرور با مربی', description: 'تصمیم‌های ثبت‌شده را با مربی مرور کنید و یک مسئلهٔ مشخص را به موضوع تمرین بعدی تبدیل کنید.', href: '/coaching', action: 'آشنایی با کوچینگ', image: 'capability-feedback.png', icon: MessageSquareText },
 ];
+
 export default function HomePage() {
-  return <div className="pro-home">
-    <section className="pro-hero container" data-scene="H1"><div className="pro-hero-copy">
-      <p className="pro-kicker"><span/> همراه؛ آموزش و توسعهٔ مهارت معامله‌گری</p>
-      <h1>هر تصمیم،<br/><span>پشتوانه‌ای</span><br/>می‌خواهد.</h1>
-      <p className="pro-hero-description">معامله‌گری را با شناخت بازار شروع کنید؛ با تمرین، ثبت تصمیم و بازخورد ادامه دهید. همراه، جایی برای ساختن این پیوستگی است.</p>
-      <div className="pro-actions"><Link href="/programs" className="btn pro-button">مسیرهای یادگیری <ArrowUpLeft size={18}/></Link><Link href="/approach" className="pro-quiet-link">نگاه ما به معامله‌گری <MoveLeft size={17}/></Link></div>
-      <div className="pro-hero-foot"><span>آموزش فارکس · ژورنال · کوچینگ</span><span>آموزش، تضمین بازده مالی نیست.</span></div>
-    </div><div className="home-studio-layer" data-parallax="16"><DecisionStudio/></div><a className="pro-scroll" href="#capabilities"><ArrowDown size={15}/><span>از شناخت تا عمل</span></a></section>
-    <div className="pro-principles"><div className="container"><span dir="ltr">HMB / THE PRACTICE OF DECISION</span><p>شناخت <i/> تمرین <i/> ثبت <i/> بازخورد</p><span>یک مسیرِ به‌هم‌پیوسته</span></div></div>
-    <div className="pro-capabilities-band"><section className="pro-section container" id="capabilities" data-scene="H2" data-reveal>
-      <div className="pro-section-index"><span>۰۱ — نگاه همراه</span><span dir="ltr">BUILT AROUND YOUR DECISIONS</span></div>
-      <div className="pro-section-heading"><h2>دانستن، آغاز ماجراست.<br/><span>مهارت، در ادامه شکل می‌گیرد.</span></h2><p>فاصلهٔ میان یادگیری و اجرا را با یک چرخهٔ مشخص دنبال می‌کنیم: فهمیدن، آزمودن و برگشتن به تصمیم‌ها.</p></div>
-      <div className="pro-capabilities" data-stagger>{capabilities.map(item=><Link className="pro-capability" href={item.href} key={item.number}><div className="pro-card-index"><span dir="ltr">{item.number}</span><item.icon size={17}/></div><div className="capability-art" aria-hidden="true"><Image src={`/images/hamrah/capability-${item.art}.png`} alt="" fill sizes="(max-width:600px) calc(100vw - 88px), (max-width:800px) 42vw, 28vw"/></div><h3>{item.title}</h3><p>{item.text}</p><span className="pro-card-link">{item.link}<ArrowUpLeft size={17}/></span></Link>)}</div>
+  const featured = articles.filter(article => article.featured).slice(0, 3);
+  const courses = listAcademyCourses().slice(0, 3);
+  const firstCourse = courses[0];
+  const preview = firstCourse?.modules.flatMap(module => module.lessons).find(lesson => lesson.isPreview);
+  const cards = courses.length ? courses.map(course => ({
+    title: course.title, audience: course.category, description: course.summary,
+    href: `/programs/${course.slug}`, action: 'سرفصل‌ها و نمونهٔ درس', image: course.cover, icon: BookOpen,
+  })) : paths.map(path => ({ ...path, image: `/images/hamrah/${path.image}` }));
+  return <div className="next-home">
+    <section className="nh-hero nh-container" aria-labelledby="nh-title" data-scene="H1">
+      <div className="nh-hero-copy">
+        <p className="nh-eyebrow">آکادمی معامله‌گری همراه</p>
+        <h1 id="nh-title">از اولین درس<br/><span>تا تصمیم بعدی.</span></h1>
+        <p className="nh-lead">با یک درس کوتاه شروع کنید، روی کاغذ تمرین کنید و از داشبوردتان به همان‌جایی برگردید که یادگیری را متوقف کردید.</p>
+        <div className="nh-actions"><a className="nh-button" href="#learning-paths">انتخاب دوره <ArrowUpLeft size={20}/></a><Link className="nh-text-link" href="/dashboard-preview"><PanelsTopLeft size={18}/> دیدن داشبورد نمونه</Link></div>
+        <p className="nh-risk">آموزش و تمرین، تضمین بازده مالی نیست.</p>
+      </div>
+      <div className="nh-hero-art nh-academy-window">
+        <div className="nh-window-mast"><span><LibraryBig size={18}/> استودیوی یادگیری همراه</span><bdi>HMB ACADEMY</bdi></div>
+        <div className="nh-window-image" data-parallax="16"><Image src="/images/hamrah/footer-marble-book-brand-v4.png" alt="" fill preload sizes="(max-width: 949px) 94vw, 46vw"/></div>
+        {firstCourse && preview ? <Link className="nh-window-lesson" href={`/programs/${firstCourse.slug}/preview/${preview.slug}`}>
+          <span className="nh-window-glyph"><BookOpen size={23}/></span><span><small>یک درس را امتحان کنید</small><strong>{preview.title}</strong></span><ArrowUpLeft size={20}/>
+        </Link> : <Link className="nh-window-lesson" href="/programs"><span className="nh-window-glyph"><BookOpen size={23}/></span><strong>کاوش در مسیرهای آموزشی</strong><ArrowUpLeft size={20}/></Link>}
+      </div>
+      <div className="nh-hero-bridge"><span><BookOpen size={19}/> یادگیری با هدف روشن</span><span><NotebookPen size={19}/> تمرین در محیط آزمایشی</span><span><MessageSquareText size={19}/> مرور با بازخورد انسانی</span></div>
     </section>
-    </div><PrinciplesChapter/><ScrollJourney/><GuidanceChapter/>
-    <section className="pro-section container pro-path-section" data-scene="H4" data-reveal><div className="pro-section-index"><span>۰۵ — مسیر شما</span><span dir="ltr">A CONSIDERED NEXT STEP</span></div><div className="pro-section-heading"><h2>از جایی شروع کنید<br/>که <span>امروز ایستاده‌اید.</span></h2><p>شروع از پایه، نظم در تمرین یا مرور با مربی؛ نیاز امروزتان را انتخاب کنید و جزئیات مسیر را ببینید.</p></div><PathPicker/><p className="pro-path-note">زمان، هزینه و ظرفیت هر مسیر پیش از پذیرش اعلام می‌شود. ثبت درخواست، خرید یا رزرو قطعی نیست.</p></section>
-    <section className="pro-section container pro-reading" data-scene="H5" data-reveal><div className="pro-section-index"><span>۰۶ — مجلهٔ همراه</span><span dir="ltr">NOTES WORTH RETURNING TO</span></div><div className="pro-section-heading"><h2>کمی مکث.<br/><span>یک نگاه دقیق‌تر.</span></h2><Link href="/insights" className="pro-quiet-link">همهٔ یادداشت‌ها <ArrowUpLeft size={18}/></Link></div><div className="pro-article-grid" data-stagger>{articles.filter(a=>a.featured).slice(0,3).map((article,i)=><Link href={`/insights/${article.slug}`} className="pro-article" key={article.slug}><div className={`pro-article-art pro-article-art-${i}`} aria-hidden="true"><div data-parallax="16"/><span dir="ltr">HMB / FIELD NOTES</span><b>{({ 'leverage-and-margin': 'اهرم، روی دیگر ریسک', 'broker-due-diligence': 'اعتماد، پس از بررسی', 'one-page-trading-plan': 'برنامه، پیش از معامله' } as Record<string,string>)[article.slug] || article.category}</b></div><span className="pro-article-category">{article.category}</span><h3>{article.title}</h3><p>{article.summary}</p><span className="pro-card-link">خواندن یادداشت <ArrowUpLeft size={16}/></span></Link>)}</div></section>
-    <section className="pro-section container pro-faq" data-scene="H6" data-reveal><div><div className="pro-section-index"><span>۰۷ — پیش از شروع</span></div><h2>انتخاب آگاهانه،<br/><span>با پاسخ روشن.</span></h2><p>دربارهٔ مسیر، شیوهٔ تمرین و شرایط درخواست بیشتر بدانید.</p><Link href="/contact" className="pro-quiet-link">پرسش دیگری دارید؟ <ArrowUpLeft size={17}/></Link></div><FAQ/></section>
-    <section className="pro-closing" data-scene="H7" data-reveal><div className="container"><span className="pro-closing-orbit" data-parallax="16" aria-hidden="true"/><p className="pro-kicker"><span/> ۰۸ — قدم بعدی، با شناخت بیشتر</p><h2>مسیر شما،<br/><span>از یک تصمیم آغاز می‌شود.</span></h2><p>مسیرها را بررسی کنید. اگر برای انتخاب به گفت‌وگو نیاز دارید، از تجربه و هدفتان برای ما بنویسید.</p><div className="pro-actions"><Link href="/apply?offer=consultation" className="btn pro-button">درخواست بررسی مسیر <ArrowUpLeft size={18}/></Link><Link href="/programs" className="pro-quiet-link">بررسی مسیرهای آموزشی <MoveLeft size={18}/></Link></div></div></section>
+
+    <section className="nh-section nh-container" id="learning-paths" aria-labelledby="nh-path-title" data-scene="H2">
+      <div className="nh-section-heading" data-reveal><div><p className="nh-eyebrow">{courses.length ? 'کتابخانهٔ دوره‌ها' : 'مسیرهای یادگیری'}</p><h2 id="nh-path-title">روی چه مهارتی کار می‌کنید؟</h2></div><Link className="nh-text-link" href="/programs">همهٔ دوره‌ها و مسیرها <ArrowUpLeft size={19}/></Link></div>
+      <div className="nh-path-grid" data-stagger>{cards.map(path => <Link className="nh-path-card" href={path.href} key={path.href}>
+        <div className="nh-path-media"><Image src={path.image} alt="" fill sizes="(max-width: 600px) 90vw, (max-width: 949px) 44vw, 30vw"/></div>
+        <div className="nh-path-body"><p className="nh-card-audience"><path.icon size={17}/>{path.audience}</p><h3>{path.title}</h3><p>{path.description}</p><span className="nh-card-action">{path.action}<ArrowUpLeft size={19}/></span></div>
+      </Link>)}</div>
+    </section>
+
+    <section className="nh-journal" id="decision-practice" aria-labelledby="nh-journal-title" data-scene="H3">
+      <div className="nh-container nh-feature-grid">
+        <div className="nh-journal-demo"><DecisionStudio/></div>
+        <div className="nh-feature-copy" data-reveal><p className="nh-eyebrow">ژورنال معاملاتی همراه</p><h2 id="nh-journal-title">هر تصمیم،<br/><span>چیزی برای یاد گرفتن دارد.</span></h2><p>برنامه چه بود و چه کردید؟ این دو را کنار هم ثبت کنید تا مرور تصمیم به حافظه و نتیجهٔ یک معامله وابسته نباشد.</p>
+          <ul className="nh-feature-list"><li><Check size={17}/>برنامه و مرز ریسک، پیش از اجرا</li><li><Check size={17}/>ثبت آنچه واقعاً انجام دادید</li><li><Check size={17}/>یک تغییر مشخص برای تمرین بعدی</li></ul>
+          <Link className="nh-button nh-button-lime" href="/journal">کاوش در ژورنال <ArrowUpLeft size={20}/></Link><p className="nh-demo-hint">نمونه را امتحان کنید. مراحل «برنامه»، «اجرا» و «مرور» قابل انتخاب‌اند.</p>
+        </div>
+      </div>
+    </section>
+
+    <section className="nh-section nh-container nh-coaching" aria-labelledby="nh-coach-title" data-scene="H4">
+      <div className="nh-coach-art" aria-hidden="true" data-reveal><Image src="/images/hamrah/hamrah-principles-sculpture.webp" alt="" fill sizes="(max-width:949px) 90vw, 45vw"/></div>
+      <div className="nh-feature-copy" data-reveal><p className="nh-eyebrow">همراهی انسانی</p><h2 id="nh-coach-title">یک گفت‌وگوی دقیق.<br/>یک تمرین روشن‌تر.</h2><p>ژورنال شما، نقطهٔ شروع گفت‌وگو با مربی است. از مرور تصمیم‌های واقعی، یک رفتار مشخص را برای تمرین بعدی انتخاب می‌کنید.</p><div className="nh-coach-example"><span>نمونهٔ پرسش در مرور تصمیم</span><p>«کدام شرط برنامه هنوز کامل نشده بود؟»</p></div><Link className="nh-text-link" href="/coaching">شیوهٔ همراهی مربی <ArrowUpLeft size={19}/></Link></div>
+    </section>
+
+    <section className="nh-reading" aria-labelledby="nh-reading-title" data-scene="H5"><div className="nh-container nh-section">
+      <div className="nh-section-heading" data-reveal><div><p className="nh-eyebrow">مجلهٔ همراه</p><h2 id="nh-reading-title">برای یک نگاه دقیق‌تر.</h2></div><Link className="nh-text-link" href="/insights">همهٔ یادداشت‌ها <ArrowUpLeft size={19}/></Link></div>
+      <div className="nh-reading-grid" data-stagger>{featured.map(article => <Link className="nh-article" href={`/insights/${article.slug}`} key={article.slug}><div className="nh-article-media" aria-hidden="true"><BlogCover title={({ 'leverage-and-margin': 'اهرم، روی دیگر ریسک', 'broker-due-diligence': 'اعتماد، پس از بررسی', 'one-page-trading-plan': 'برنامه، پیش از معامله' } as Record<string, string>)[article.slug] || article.category} category={article.category}/></div><div className="nh-article-copy"><span>{article.category} · {article.minutes} دقیقه مطالعه</span><h3>{article.title}</h3><p>{article.summary}</p><span className="nh-card-action">خواندن یادداشت <ArrowUpLeft size={18}/></span></div></Link>)}</div>
+    </div></section>
+
+    <section className="nh-section nh-container nh-faq" aria-labelledby="nh-faq-title" data-scene="H6"><div data-reveal><p className="nh-eyebrow">پیش از شروع</p><h2 id="nh-faq-title">با آگاهی،<br/>قدم بعدی را بردارید.</h2><p>پاسخ پرسش‌های متداول دربارهٔ مسیر، تمرین و شرایط درخواست.</p><Link className="nh-text-link" href="/contact">پرسش دیگری دارید؟ <ArrowUpLeft size={18}/></Link></div><FAQ/></section>
+    <section className="nh-container nh-final" data-reveal data-scene="H7"><div><p className="nh-eyebrow">انتخاب مسیر با شناخت بیشتر</p><h2>از تجربه و هدفتان بگویید.</h2><p>درخواست شما را بررسی می‌کنیم تا دربارهٔ مسیر متناسب با شرایطتان گفت‌وگو کنیم.</p></div><Link className="nh-button" href="/apply?offer=consultation">درخواست بررسی مسیر <ArrowUpLeft size={20}/></Link></section>
   </div>;
 }

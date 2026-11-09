@@ -12,7 +12,7 @@ This release uses the standard `next start` Node server with the full project an
 
 ## Health, migrations, data and recovery
 
-`GET /api/health` checks the database and returns a minimal status. Monitor non-2xx responses, database disk space and backup age. Error logging emits error names only, not contact details or journal bodies. Initial schema is installed idempotently with `PRAGMA user_version=1`; there are no destructive upgrade migrations in this release. Future schema changes require numbered migrations and a restore test.
+`GET /api/health` checks the database and returns a minimal status. Monitor non-2xx responses, database disk space and backup age. Error logging emits error names only, not contact details or journal bodies. First connection migrates existing data through schema version 3. Version 2 upgrades sessions and version 3 adds the academy tables. Future schema changes require numbered migrations and a restore test.
 
 Create a consistent SQLite snapshot while running:
 
@@ -34,13 +34,13 @@ Applications: submitted → under_review → information_requested / accepted / 
 
 Members create, save and submit their own entries. Assigned coaches see their active members' entries and add feedback. Acknowledgement and follow-up belong to the member. Revisions preserve prior versions. No automated financial advice or AI coach is implemented. Admin access exists for support; broader journal-access auditing and MFA are recommended before handling live member data at scale.
 
-Members can export their own data and request deletion. Admins can fulfil deletion requests (journal deletion, session revocation, profile anonymization) or decline after review. Audit identifiers remain for operational integrity; historic application records are a separate data set. Backup erasure and application-retention handling need an owner-approved policy before live operation. Suspension and service entitlement are represented by one `active` flag in this core; real commercial entitlements require a verified source of authority.
+Members can export their own data and request deletion. Admins can fulfil deletion requests (journal and academy history deletion, session revocation, profile anonymization) or decline after review. Audit identifiers remain for operational integrity; historic application records are a separate data set. Backup erasure and application-retention handling need an owner-approved policy before live operation. Suspension and service entitlement are represented by one `active` flag in this core; real commercial entitlements require a verified source of authority.
 
 ## Editorial operations
 
 `/admin/content` supports plain-text articles, programs and events: draft → in_review → published → archived. A draft is previewed only inside authenticated staff UI. Public pages query published content per request. Untrusted HTML is rendered as text, not executed. Proposed built-in program outlines and three educational exercises are in `src/lib/content.ts`; staff-created content uses SQLite. Built-in editorial content is versioned in code and should be migrated to an approved CMS entry before owner editing becomes the sole source of truth.
 
-No dated event is invented. CMS event records in this core are plain-text descriptions; structured scheduling, capacities, booking and timezone conversion are deferred until real events are provided. Payment, Telegram, email, calendar, LMS and Instagram adapters remain unconfigured; their delivery should be scoped when actual providers and permissions are supplied.
+No dated event is invented. CMS event records in this core are plain-text descriptions; structured scheduling, capacities, booking and timezone conversion are deferred until real events are provided. The local academy serves reading lessons, exercises and member progress. See [the database roadmap](academy-database-roadmap.md) for configuration. Payment, Telegram, email, calendar, media playback and Instagram adapters remain unconfigured; their delivery should be scoped when actual providers and permissions are supplied.
 
 ## Publication inputs
 

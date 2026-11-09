@@ -1,6 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpLeft, MoveLeft } from 'lucide-react';
+import { ArrowUpLeft, MoveLeft, ShieldCheck, ListChecks, MessagesSquare } from 'lucide-react';
+
+export function StrengthChapter() {
+  return <section id="hamrah-strength" className="home-strength" aria-labelledby="strength-title">
+    <div className="container">
+      <div className="home-strength-lead" data-reveal><div><p className="eyebrow">همراه؛ پشتوانهٔ مسیر حرفه‌ای شما</p><h2 id="strength-title">برای بازار آماده شوید.<br/><span>با مهارتی که می‌توانید اجرا کنید.</span></h2></div><p>شناخت تکنیک، نقطهٔ شروع است. قدرت معامله‌گر در اجرای منظم، کنترل ریسک و اصلاح تصمیم‌ها شکل می‌گیرد. همراه، آموزش را به همین مهارت‌های عملی پیوند می‌دهد.</p></div>
+      <div className="home-strength-grid" data-stagger>
+        <article><span className="home-strength-number" aria-hidden="true"><ShieldCheck size={22}/>۰۱</span><h3>آمادگی برای ارزیابی پراپ</h3><p>قواعد ارزیابی را به معیار تمرین تبدیل کنید؛ از سقف زیان روزانه و افت سرمایه تا پایبندی به برنامه در چند معاملهٔ پیاپی.</p><Link href="/programs/practice">تمرین و مدیریت ریسک <ArrowUpLeft size={17}/></Link></article>
+        <article><span className="home-strength-number" aria-hidden="true"><ListChecks size={22}/>۰۲</span><h3>تکنیک، با برنامهٔ اجرایی</h3><p>برای هر موقعیت، شروط ورود، نقطهٔ بی‌اعتباری و مرز ریسک را روشن کنید. تکنیک زمانی به کار می‌آید که بدانید کِی و چگونه آن را اجرا کنید.</p><Link href="/programs">مسیرهای آموزش معامله‌گری <ArrowUpLeft size={17}/></Link></article>
+        <article><span className="home-strength-number" aria-hidden="true"><MessagesSquare size={22}/>۰۳</span><h3>بازخورد برای پیشرفت حرفه‌ای</h3><p>از تصمیم‌های ثبت‌شده، الگوی اجرای خود را بشناسید. یک مسئلهٔ مشخص را با مربی مرور کنید و برای تمرین بعد، تغییر روشنی انتخاب کنید.</p><Link href="/coaching">همراهی مربی در مسیر شما <ArrowUpLeft size={17}/></Link></article>
+      </div>
+    </div>
+  </section>;
+}
 
 export function PrinciplesChapter() {
   return <section id="principles" className="home-chapter home-chapter--principles" aria-labelledby="principles-title">

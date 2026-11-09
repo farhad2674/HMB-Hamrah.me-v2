@@ -10,7 +10,8 @@ import './subpages.css';
 import './workspaces.css';
 import './motion.css';
 import './artwork.css';
-import { Header, Footer } from '@/components/Shell';
+import './next-version.css';
+import { SiteFrame } from '@/components/SiteFrame';
 import JourneyAnalytics from '@/components/JourneyAnalytics';
 import MotionObserver from '@/components/MotionObserver';
 import { isPublicSite, JsonLd, organizationSchema, websiteSchema } from '@/lib/site';
@@ -28,5 +29,5 @@ export const metadata: Metadata = {
   icons: { icon: '/icon.svg' },
 };
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode}>) {
-  return <html lang="fa" dir="rtl"><body><JsonLd data={[organizationSchema,websiteSchema]}/><a className="skip-link" href="#main">رفتن به محتوای اصلی</a><Header/><div className="reading-progress" aria-hidden="true"><span/></div><main id="main">{children}</main><Footer/><JourneyAnalytics/><MotionObserver/></body></html>;
+  return <html lang="fa" dir="rtl"><body><JsonLd data={[organizationSchema,websiteSchema]}/><a className="skip-link" href="#main">رفتن به محتوای اصلی</a><SiteFrame>{children}</SiteFrame><JourneyAnalytics/><MotionObserver/></body></html>;
 }
